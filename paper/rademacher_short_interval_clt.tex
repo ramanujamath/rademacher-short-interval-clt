@@ -1,0 +1,877 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\tQ}{\widetilde{Q}}
+\newcommand{\tV}{\widetilde{V}}
+\newcommand{\tB}{\widetilde{B}}
+\newcommand{\tD}{\widetilde{D}}
+\newcommand{\ta}{\widetilde{a}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bt}{\mathbf{t}}
+
+\title[Rademacher sums in logarithmic short intervals]{Gaussian limits for Rademacher random multiplicative sums in logarithmic short intervals}
+
+\author{Sumit Kumar Jha}
+\address{Independent Researcher, Plot No.~78, Jal Shakti Vihar, Phi II, Greater Noida, Uttar Pradesh, India}
+\email{sumitkumarjha75@gmail.com}
+
+\subjclass[2020]{Primary 11K65; Secondary 11N37, 60F05}
+\keywords{Random multiplicative functions, short intervals, central limit theorem, random Euler products, martingales}
+
+
+
+\begin{document}
+
+\begin{abstract}
+Let $f$ be a Rademacher random multiplicative function: $f$ is supported on the squarefree integers, and its values at the primes are independent random signs, each equal to $+1$ or $-1$ with probability $1/2$. Fix $0<\alpha<\log 4-1$ and put $y=x/(\log x)^\alpha$. We prove that $\sum_{x<n\le x+y}f(n)$, divided by $\sqrt{6y/\pi^2}$, converges in distribution to a standard real Gaussian as $x\to\infty$. This covers interval lengths just beyond the range treated by Soundararajan and Xu. The proof follows the martingale method of Harper, Soundararajan and Xu, which they carried out for the Steinhaus model. In that model the law of the random Euler product does not change under a shift in frequency, and their argument uses this. That fails for Rademacher signs, and we replace it with two estimates that hold at each fixed frequency. The first is a weighted concentration theorem for the mean square of the random Euler product, proved by a barrier argument under a change of measure. The second handles the conditional fourth moment of the martingale. Rademacher signs create correlations both between equal frequencies and between opposite frequencies, and the second estimate controls both.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+\subsection{The result}
+Let $(\varepsilon_p)_p$ be independent random variables indexed by the primes, with $\P(\varepsilon_p=1)=\P(\varepsilon_p=-1)=1/2$. Put $f(1)=1$ and, for $n>1$,
+\[
+f(n)=\begin{cases}\prod_{p\mid n}\varepsilon_p, & n \text{ squarefree},\\ 0, & \text{otherwise}.\end{cases}
+\]
+(An integer is \emph{squarefree} if no square of a prime divides it.) This $f$ is a \emph{Rademacher random multiplicative function}. Its values at distinct primes are independent, but its values at general integers are not: for instance $f(6)=f(2)f(3)$. We study the distribution of its sums over short intervals.
+
+Throughout, $c=6/\pi^2$ and $N(0,1)$ is the real Gaussian distribution with mean $0$ and variance $1$. The arrow $\Rightarrow$ denotes convergence in distribution. All logarithms are natural.
+
+\begin{theorem}\label{thm:main}
+Fix $\alpha$ with $0<\alpha<\log 4-1$, and put $y=x/(\log x)^\alpha$. As $x\to\infty$,
+\begin{equation}\label{eq:main}
+\frac{1}{\sqrt{cy}}\sum_{x<n\le x+y}f(n)\;\Rightarrow\; N(0,1).
+\end{equation}
+\end{theorem}
+
+The normalization is the standard deviation. Indeed, if $m\ne n$ are squarefree, then $f(m)f(n)$ is the product of $\varepsilon_p$ over the primes dividing exactly one of $m,n$. This set of primes is nonempty, so the product has mean zero. Hence $\E[f(m)f(n)]=\mu(n)^2\one_{m=n}$, where $\mu$ is the M\"obius function. Counting squarefree integers in an interval gives
+\[
+\E\Bigl(\sum_{x<n\le x+y}f(n)\Bigr)^2=\sum_{x<n\le x+y}\mu(n)^2=cy+O(\sqrt{x})\sim cy .
+\]
+
+\subsection{Background}
+Chatterjee and Soundararajan \cite[Theorem~1.1]{CS} proved Gaussian limits for Rademacher sums in short intervals. Soundararajan and Xu \cite[Section~9]{SX} extended the range of lengths. As recorded by Harper, Soundararajan and Xu \cite[Section~1]{HSX}, their result applies when
+\[
+Cx^{1/5}\log x\le y\le x/(\log x)^{\log 4-1+\epsilon}
+\]
+for a suitable constant $C$ and each fixed $\epsilon>0$. Theorem~\ref{thm:main} treats the longer intervals $y=x/(\log x)^\alpha$ with $0<\alpha<\log 4-1$.
+
+The \emph{Steinhaus} model has independent values at primes that are uniformly distributed on the complex unit circle, extended completely multiplicatively. For that model, Harper, Soundararajan and Xu \cite[Theorem~1.1]{HSX} prove Gaussian limits throughout the range $y\to\infty$, $y=o(x)$. They use an explicit normalization, which agrees with $\sqrt{y}$ until $\log(x/y)$ becomes comparable with $\sqrt{\log\log x}$ and differs from it beyond that point. In their Section~1.4 they leave the Rademacher analogue open and identify the obstacle. In the proof of their Proposition~3.7 they use the fact that, in the Steinhaus model, the family $(f(p)p^{-it})_p$ has the same law for every $t$ (\emph{translation invariance in law}). This is false for Rademacher signs. In our range $\log(x/y)\sim\alpha\log\log x$ is much larger than $\sqrt{\log\log x}$, so the usual normalization is the right one. We do not address the transition in the normalization.
+
+The failure of translation invariance also appears in the almost-sure bounds of Durkan and Pearce-Crump \cite[Section~8.2]{DPC}, who handle it by shifted low-moment estimates. Here we need instead a concentration statement for the specific integral that governs short-interval variances.
+
+\subsection{Outline of the proof}
+We follow the conditional-variance and martingale framework of \cite[Sections~2--4]{HSX}. Choose a cutoff $z$ slightly smaller than a fixed power of $x$ (see Section~\ref{sec:transfer}). The integers in $(x,x+y]$ whose prime factors are all at most $z$ contribute negligibly. For the remaining integers we reveal the signs $\varepsilon_p$, $p>z$, one prime at a time in increasing order. The sum then becomes a martingale. A martingale central limit theorem (Lemma~\ref{lem:mclt}) gives \eqref{eq:main}, provided that
+\begin{enumerate}[label=(\roman*)]
+\item the predictable quadratic variation $Q_x$ satisfies $Q_x/(cy)\to1$ in probability, and
+\item the individual increments are small in fourth moment (Lemma~\ref{lem:small}).
+\end{enumerate}
+Condition (i) is split into two steps.
+
+\emph{Step 1.} The conditional variance $V_f=\E(Q_x\mid\text{signs at }p\le z)$ is, up to a negligible error, a fixed multiple of $\int W_T(t)|R_z(t)|^2\dd t$. Here $R_z(t)=\prod_{p\le z}(1+\varepsilon_pp^{-1/2-it})$ is a random Euler product and $W_T$ is an explicit nonnegative kernel of width about $T\asymp x/y$ (Proposition~\ref{prop:transfer}). We prove that this integral is concentrated around its mean (Theorem~\ref{thm:conc}). The proof truncates the integrand on the rare event that a partial product is unusually large (a \emph{barrier} event). The probability of this event is estimated under a change of measure that makes it typical (Lemma~\ref{lem:barrier}), and this is done separately at each frequency $t$. The truncated integral then has a second moment close to the square of its mean.
+
+\emph{Step 2.} We show that $Q_x-V_f$ is small. Its conditional second moment is a fourfold sum over integers whose product is a perfect square. Such quadruples are described by six free variables (Lemma~\ref{lem:six}). Because $\varepsilon_p$ is real, the resulting Dirichlet series have large values both near equal frequencies and near opposite frequencies $t\approx-u$. The symmetry $|R_z(-t)|=|R_z(t)|$ turns the second kind into the first. A second barrier estimate (Section~\ref{sec:close}) handles nearly equal frequencies.
+
+Sections~\ref{sec:local}--\ref{sec:concproof} prove Theorem~\ref{thm:conc}. Section~\ref{sec:transfer} applies it to the conditional variance. Section~\ref{sec:mart} sets up the martingale and proves the small-increment estimate. Sections~\ref{sec:smooth}--\ref{sec:close} control the quadratic variation and complete the proof of Theorem~\ref{thm:main}.
+
+\subsection{Notation}\label{sec:notation}
+We write $\N=\{1,2,\dots\}$. The letter $p$ always denotes a prime. Integer variables are positive unless stated otherwise. Integrals over frequencies are with respect to Lebesgue measure on $\R$. For a finite set $A$, $\#A$ is its size. For an event or set $A$, $\one_A$ is its indicator and $A^c$ its complement. Empty products equal $1$ and empty sums equal $0$. For $a>0$ and complex $s$, $a^s=\exp(s\log a)$.
+
+For $n>1$, $P(n)$ and $P^-(n)$ are the largest and smallest prime factors of $n$; we set $P(1)=1$ and $P^-(1)=\infty$. The number of distinct prime factors of $n$ is $\omega(n)$, the number of divisors is $\tau(n)$, and $d_3(n)=\#\{(a,b,c)\in\N^3:abc=n\}$. For $w\ge2$, an integer is \emph{$w$-smooth} if all its prime factors are at most $w$, and \emph{$w$-rough} if all its prime factors exceed $w$. Thus $1$ is both. We write $S(w)$ for the set of $w$-smooth integers and
+\[
+\Psi(v,w)=\#\{n\le v:\ P(n)\le w\}.
+\]
+
+$\E$ and $\P$ are expectation and probability, and $\Var Z=\E|Z-\E Z|^2$. For $q\ge1$, $\|Z\|_q=(\E|Z|^q)^{1/q}$. If $a_x>0$ is a deterministic scale, $Z_x=o_{L^1}(a_x)$ means $\E|Z_x|/a_x\to0$, and $Z_x=o_\P(a_x)$ means $Z_x/a_x\to0$ in probability.
+
+For $B\ge0$, $A\ll B$ and $A=O(B)$ both mean $|A|\le CB$ for some constant $C$. A subscript on $\ll$ or $O$ lists parameters that $C$ may depend on. $A\asymp B$ means $A\ll B\ll A$. $A\sim B$ means $A/B\to1$, and $A=o(B)$ means $A/B\to0$. Unless stated otherwise, limits are as $x\to\infty$ with $\alpha$ fixed, and constants may depend on $\alpha$. In Theorem~\ref{thm:conc} and Sections~\ref{sec:local}--\ref{sec:concproof}, limits are instead taken in the parameters $z$ and $T$ described there.
+
+\subsection{Random Euler products and the concentration theorem}
+For $z\ge2$, $2\le v\le z$ and real $t$, define
+\[
+R_z(t)=\prod_{p\le z}\bigl(1+\varepsilon_pp^{-1/2-it}\bigr),\qquad R_{v,z}(t)=\prod_{v<p\le z}\bigl(1+\varepsilon_pp^{-1/2-it}\bigr),
+\]
+\[
+M_z=\prod_{p\le z}\bigl(1+p^{-1}\bigr),\qquad M_{v,z}=\prod_{v<p\le z}\bigl(1+p^{-1}\bigr).
+\]
+Since $f$ is supported on squarefree integers, $R_z(t)=\sum_{n\in S(z)}f(n)n^{-1/2-it}$, a finite sum. Expanding $|1+\varepsilon_pp^{-1/2-it}|^2=1+p^{-1}+2\varepsilon_pp^{-1/2}\cos(t\log p)$ shows that $\E|R_z(t)|^2=M_z$ for every $t$. The \emph{law} of $|R_z(t)|$, however, depends on $t$. Since the signs are real, $|R_z(-t)|=|R_z(t)|$.
+
+For $T\ge2$ define the kernel
+\begin{equation}\label{eq:WT}
+W_T(t)=T^2\,\frac{2\cosh(1/T)-2\cos(2t/T)}{1/4+t^2},\qquad J_T=\int_\R W_T(t)\dd t .
+\end{equation}
+In Section~\ref{sec:transfer} we will see that $W_T(t)/T^2=|e^{s/T}-e^{-s/T}|^2/|s|^2$ with $s=1/2+it$. This is the squared modulus of the Fourier transform of the interval indicator in logarithmic coordinates. The kernel is even and nonnegative. Writing the numerator as $2(\cosh(1/T)-1)+4\sin^2(t/T)$ and using $|\sin\theta|\le\min\{1,|\theta|\}$ gives
+\begin{equation}\label{eq:Wbounds}
+W_T(t)\ll\min\Bigl\{1,\frac{T^2}{1+t^2}\Bigr\},\qquad J_T=4\pi T^2\sinh(1/T)\sim4\pi T .
+\end{equation}
+The value of $J_T$ follows from $\int_\R\cos(bt)(1/4+t^2)^{-1}\dd t=2\pi e^{-|b|/2}$.
+
+\begin{theorem}[Weighted Euler-product concentration]\label{thm:conc}
+Fix $C>0$. Let $z\to\infty$ and $T\to\infty$ with $T\le(\log z)^C$ and
+\begin{equation}\label{eq:Tcond}
+\frac{\log T}{\sqrt{\log\log z}}\longrightarrow\infty .
+\end{equation}
+Then
+\begin{equation}\label{eq:conc}
+\E\,\biggl|\frac{1}{M_zJ_T}\int_\R W_T(t)|R_z(t)|^2\dd t-1\biggr|\longrightarrow0 .
+\end{equation}
+\end{theorem}
+
+The statement is an $L^1$ estimate. The second moment of the integral is not asymptotic to the square of its mean, because of rare large values, so we work with a truncated second moment.
+
+\section{Local moments and prime sums}\label{sec:local}
+
+Fix a prime $p$ and write $\theta=t\log p$. Then $|1+\varepsilon_pp^{-1/2}e^{-i\theta}|^2=1+p^{-1}+2\varepsilon_pp^{-1/2}\cos\theta$. Multiplying two such factors, averaging over $\varepsilon_p$ and using independence across primes gives the exact identity
+\begin{equation}\label{eq:4mom}
+\frac{\E\bigl[|R_{v,z}(t)|^2|R_{v,z}(u)|^2\bigr]}{M_{v,z}^2}=\prod_{v<p\le z}\Bigl(1+\frac{4p}{(p+1)^2}\cos(t\log p)\cos(u\log p)\Bigr).
+\end{equation}
+Since $4p/(p+1)^2\le 8/9$, we may take logarithms. Using $2\cos A\cos B=\cos(A-B)+\cos(A+B)$, we get, uniformly in real $t,u$,
+\begin{equation}\label{eq:4momlog}
+\log\frac{\E\bigl[|R_{v,z}(t)|^2|R_{v,z}(u)|^2\bigr]}{M_{v,z}^2}=2\sum_{v<p\le z}\frac{\cos((t-u)\log p)+\cos((t+u)\log p)}{p}+O(v^{-1}).
+\end{equation}
+So two products can be correlated when $t\approx u$ and also when $t\approx-u$. Because $|R_z(-t)|=|R_z(t)|$, it suffices to prove Theorem~\ref{thm:conc} for positive frequencies. We restrict further to $t\ge1$, which keeps $t+u\ge2$; the frequencies in $[0,1)$ carry negligible expected mass.
+
+We use the following consequence of the prime number theorem.
+
+\begin{lemma}\label{lem:pnt}
+There is an absolute constant $c_0>0$ such that, for all $3\le a\le b$ and all real $h\ne0$,
+\begin{equation}\label{eq:pnt}
+\Bigl|\sum_{a<p\le b}\frac{p^{ih}}{p}\Bigr|\ll\frac{1}{|h|\log a}+(1+|h|)e^{-c_0\sqrt{\log a}} .
+\end{equation}
+Moreover, uniformly for $3\le a\le b$,
+\begin{equation}\label{eq:mertens}
+M_{a,b}\asymp\frac{\log b}{\log a},\qquad\sum_{a<p\le b}\frac1p=\log\frac{\log b}{\log a}+O\Bigl(\frac{1}{\log a}\Bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $\vartheta(v)=\sum_{p\le v}\log p$. The prime number theorem in the form $\vartheta(v)=v+O(ve^{-c_1\sqrt{\log v}})$, with $c_1>0$ absolute, and partial summation replace the sum in \eqref{eq:pnt} by $\int_{\log a}^{\log b}e^{ihs}s^{-1}\dd s$. The error is the second term on the right of \eqref{eq:pnt}, after decreasing $c_1$ to some $c_0>0$; the factor $1+|h|$ comes from differentiating $v^{ih}$. Integration by parts bounds the integral by $O((|h|\log a)^{-1})$. The same partial summation with $h=0$ gives Mertens' estimate \eqref{eq:mertens} for $\sum1/p$. Since $\log M_{a,b}=\sum_{a<p\le b}1/p+O(1/a)$, this also gives $M_{a,b}\asymp\log b/\log a$.
+\end{proof}
+
+\section{A mean-square estimate for the small primes}\label{sec:small}
+
+\begin{lemma}\label{lem:var}
+For $w\ge2$ and $T\ge2$,
+\begin{equation}\label{eq:var}
+\Var\Bigl(\int_\R W_T(t)|R_w(t)|^2\dd t\Bigr)\ll M_w^2\,T\bigl\{(\log 2w)^3+T^{1/2}\log(2T)\bigr\}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write $\widehat W_T(\xi)=\int_\R e^{it\xi}W_T(t)\dd t$. Writing $2\cos(2t/T)=e^{2it/T}+e^{-2it/T}$ and applying $\int_\R e^{it\xi}(1/4+t^2)^{-1}\dd t=2\pi e^{-|\xi|/2}$ to each of the three terms of \eqref{eq:WT}, we get
+\begin{equation}\label{eq:What}
+\widehat W_T(\xi)=\begin{cases}4\pi T^2\sinh(1/T-|\xi|/2),&|\xi|\le2/T,\\0,&|\xi|>2/T.\end{cases}
+\end{equation}
+In particular $0\le\widehat W_T(\xi)\le J_T\ll T$, and $\widehat W_T$ vanishes outside $[-2/T,2/T]$.
+
+For a squarefree $d$, the product $\varepsilon_d=\prod_{p\mid d}\varepsilon_p$ has mean $0$ unless $d=1$, and $\E[\varepsilon_d\varepsilon_{d'}]=\one_{d=d'}$. In other words, these products form an orthonormal family. Expanding
+\[
+\frac{|R_w(t)|^2}{M_w}=\prod_{p\le w}\Bigl(1+\frac{2\sqrt p}{p+1}\,\varepsilon_p\cos(t\log p)\Bigr)
+\]
+and using $\prod_{p\mid d}2\cos(t\log p)=\sum_{ab=d}(a/b)^{it}$, we find
+\[
+\frac{1}{M_w}\int_\R W_T(t)|R_w(t)|^2\dd t=\sum_{\substack{d\in S(w)\\ d\text{ squarefree}}}c_d\,\varepsilon_d,\qquad c_d=\frac{\sqrt d}{\prod_{p\mid d}(p+1)}\sum_{ab=d}\widehat W_T\bigl(\log(a/b)\bigr).
+\]
+The constant coefficient is $c_1=J_T$. By orthogonality, Cauchy's inequality and $d/\prod_{p\mid d}(p+1)^2\le1/d$,
+\[
+\frac{1}{M_w^2}\Var\Bigl(\int W_T|R_w|^2\Bigr)=\sum_{\substack{1<d\in S(w)\\ d\text{ squarefree}}}c_d^2\le\sum_{\substack{1<d\in S(w)\\ d\text{ squarefree}}}\frac{\tau(d)}{d}\sum_{ab=d}\widehat W_T\bigl(\log(a/b)\bigr)^2 .
+\]
+For squarefree $d=ab$ we have $\tau(d)=\tau(a)\tau(b)$, and $a\ne b$ because $d>1$ is squarefree. The support of $\widehat W_T$ forces $|\log(a/b)|\le2/T$. By symmetry take $a>b$. Then $ae^{-2/T}\le b\le a-1$, so $a(1-e^{-2/T})\ge1$ and hence $a\ge T/2$. Also $b\ge a/e$, so $1/(ab)\ll1/a^2$. Dropping the conditions that $a,b$ are coprime and squarefree and that $b$ is $w$-smooth, and using $\widehat W_T\ll T$, the last sum is
+\[
+\ll T^2\sum_{\substack{a\in S(w)\\ a\ge T/2}}\frac{\tau(a)}{a^2}\sum_{ae^{-2/T}\le b<a}\tau(b).
+\]
+The interval for $b$ has length at most $2a/T$, so the divisor-sum asymptotic $\sum_{n\le v}\tau(n)=v\log v+(2\gamma-1)v+O(\sqrt v)$, where $\gamma$ is Euler's constant, gives $\sum_{ae^{-2/T}\le b<a}\tau(b)\ll(a/T)\log(2a)+\sqrt a$. Logarithmic differentiation of the Euler product for $\sum_{a\in S(w)}\tau(a)a^{-s}$ at $s=1$, together with partial summation, gives
+\[
+\sum_{a\in S(w)}\frac{\tau(a)\log(2a)}{a}\ll(\log2w)^3,\qquad\sum_{a\ge T/2}\frac{\tau(a)}{a^{3/2}}\ll\frac{\log(2T)}{\sqrt T}.
+\]
+Substituting proves \eqref{eq:var}. All the sums before we enlarged them are finite, and the enlarged sums of positive terms converge.
+\end{proof}
+
+\section{A barrier event with negligible expected loss}\label{sec:barrier}
+
+For the rest of the proof of Theorem~\ref{thm:conc} we fix the parameters
+\[
+L=\log\log z,\quad\ell=\log T,\quad w=\exp(\ell^4),\quad H_0=T^2,\quad\beta=\sqrt\ell,\quad\Delta=(\log w)^{-1/2}=\ell^{-2}.
+\]
+Since $T\le(\log z)^C$, we have $\log w=\ell^4\le C^4L^4<\log z$ for large parameters, so $w<z$. Let $\mathcal V$ consist of $w$, of every number $\exp(e^j\log w)$ with integer $j\ge1$ that is less than $z$, and of $z$. Consecutive elements $v<v'$ of $\mathcal V$ satisfy $\log v'\le e\log v$. For $v\in\mathcal V$ put
+\[
+k_v=\log\frac{\log v}{\log w}\in[0,L].
+\]
+
+For $1\le t\le H_0$ let $\mathcal B_t$ be the event
+\begin{equation}\label{eq:barrier}
+|R_{w,v}(t)|\le\sqrt T\,e^{-\beta}\,\frac{\log v/\log w}{(1+k_v)^2}\qquad\text{for every }v\in\mathcal V .
+\end{equation}
+In words, $\mathcal B_t$ says that no partial product over the primes in $(w,v]$ is much larger than its typical size $\log v/\log w$. The event depends only on the signs at primes in $(w,z]$. At $v=w$ the product is empty, and the condition holds once $\sqrt Te^{-\beta}\ge1$.
+
+\begin{lemma}\label{lem:barrier}
+Uniformly for $1\le t\le H_0$,
+\begin{equation}\label{eq:barrierbound}
+\E\bigl[|R_{w,z}(t)|^2\one_{\mathcal B_t^c}\bigr]\ll M_{w,z}\frac{L}{\ell^2}=o(M_{w,z}).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We change measure so that the barrier event becomes a typical event. Define a probability measure $\Q_t$ on the signs at primes in $(w,z]$ by
+\[
+\frac{\dd\Q_t}{\dd\P}=\frac{|R_{w,z}(t)|^2}{M_{w,z}} .
+\]
+Then $\E[|R_{w,z}(t)|^2\one_{\mathcal B_t^c}]=M_{w,z}\Q_t(\mathcal B_t^c)$. The density is a product over primes, so the signs remain independent under $\Q_t$, and
+\[
+\E_{\Q_t}\varepsilon_p=\frac{2p^{-1/2}\cos(t\log p)}{1+p^{-1}} .
+\]
+Put $\Lambda_p(t)=\log|1+\varepsilon_pp^{-1/2-it}|$, $\gamma=p^{-1/2}$ and $\theta=t\log p$. Expanding $\operatorname{Re}\log(1+\varepsilon_p\gamma e^{-i\theta})$ and using $\varepsilon_p^2=1$,
+\[
+\Lambda_p(t)=\varepsilon_p\gamma\cos\theta-\tfrac12\gamma^2\cos2\theta+\tfrac13\varepsilon_p\gamma^3\cos3\theta+O(\gamma^4),
+\]
+uniformly in $\theta$. Under $\Q_t$ the first term has mean $2\gamma^2\cos^2\theta+O(\gamma^4)=\gamma^2+\gamma^2\cos2\theta+O(\gamma^4)$, and the cubic term has mean $O(\gamma^4)$. Hence, uniformly in $t$,
+\begin{equation}\label{eq:tiltmean}
+\E_{\Q_t}\Lambda_p(t)=\frac1p+\frac{\cos(2t\log p)}{2p}+O(p^{-2}),\qquad\Var_{\Q_t}\Lambda_p(t)\ll p^{-1},
+\end{equation}
+the variance bound following from $|\Lambda_p(t)|\ll p^{-1/2}$.
+
+By \eqref{eq:mertens}, and by \eqref{eq:pnt} with $h=2t\ge2$, uniformly in $1\le t\le H_0$ and $v\ge w$,
+\[
+\sum_{w<p\le v}\E_{\Q_t}\Lambda_p(t)=k_v+O(1).
+\]
+The error from the prime number theorem is at most $3H_0e^{-c_0\sqrt{\log w}}=3T^2e^{-c_0\ell^2}=o(1)$. The sum of the variances over $w<p\le z$ is $O(L)$ by \eqref{eq:mertens}.
+
+Taking logarithms in \eqref{eq:barrier}, the event $\mathcal B_t^c$ says that for some $v\in\mathcal V$ the sum $\sum_{w<p\le v}\Lambda_p(t)$ exceeds $\tfrac12\ell-\beta+k_v-2\log(1+k_v)$. This threshold exceeds the $\Q_t$-mean of the sum by
+\[
+\tfrac12\ell-\beta-2\log(1+k_v)-O(1)\ge\tfrac14\ell,
+\]
+because $k_v\le L$ and, by \eqref{eq:Tcond}, $\ell/\sqrt L\to\infty$, so that $\beta+2\log(1+L)=o(\ell)$. By Kolmogorov's maximal inequality for sums of independent centred variables, $\Q_t(\mathcal B_t^c)\ll L/\ell^2$. This is \eqref{eq:barrierbound}, and $L/\ell^2\to0$ by \eqref{eq:Tcond}.
+\end{proof}
+
+Lemma~\ref{lem:barrier} is what we use in place of translation invariance. It concerns only the statistic in \eqref{eq:barrier} at each fixed frequency. It does not compare the laws of the Euler product at different frequencies.
+
+\section{The truncated second moment; proof of Theorem~\ref{thm:conc}}\label{sec:concproof}
+
+Set
+\[
+I=\int_0^\infty W_T(t)|R_z(t)|^2\dd t,\qquad Z=\int_1^{H_0}W_T(t)|R_z(t)|^2\one_{\mathcal B_t}\dd t,\qquad m_0=\frac{M_zJ_T}{2}.
+\]
+Since $W_T$ is even, $\E I=m_0$, and clearly $0\le Z\le I$. The event $\mathcal B_t$ depends only on primes in $(w,z]$, which are independent of those at most $w$. So $\E[|R_z(t)|^2\one_{\mathcal B_t^c}]=M_w\E[|R_{w,z}(t)|^2\one_{\mathcal B_t^c}]$. The intervals $[0,1]$ and $(H_0,\infty)$ have kernel mass $O(1)$ by \eqref{eq:Wbounds}, while $m_0\asymp M_zT$. With Lemma~\ref{lem:barrier} this gives
+\begin{equation}\label{eq:IminusZ}
+\E(I-Z)\ll m_0\bigl(T^{-1}+L/\ell^2\bigr)=o(m_0).
+\end{equation}
+
+We now show $\E Z^2\le(1+o(1))m_0^2$. Expand $Z^2$ as a double integral over $(t,u)\in[1,H_0]^2$ and split by the size of $|t-u|$.
+
+\medskip\noindent\emph{Separated frequencies: $|t-u|>\Delta$.} Here $t+u\ge2$ and $|t-u|\log w\ge\sqrt{\log w}$. So \eqref{eq:4momlog} and \eqref{eq:pnt} give
+\[
+\E\bigl[|R_{w,z}(t)|^2|R_{w,z}(u)|^2\bigr]=M_{w,z}^2\{1+O(\ell^{-2})\}.
+\]
+The prime-number-theorem error, at most a constant times $T^2e^{-c_0\ell^2}$, is absorbed. We drop the barrier indicators, which can only increase the integral. Using independence of the two prime ranges and positivity, this part of $\E Z^2$ is at most
+\[
+(1+o(1))M_{w,z}^2\,\E\Bigl(\int_0^\infty W_T(t)|R_w(t)|^2\dd t\Bigr)^2=(1+o(1))m_0^2 .
+\]
+For the last step: by evenness the half-line integral is exactly half the full integral, so its mean is $M_wJ_T/2$. By Lemma~\ref{lem:var} its variance is $o((M_wT)^2)$, because $(\log w)^3/T=\ell^{12}/T\to0$ and $\log T/\sqrt T\to0$.
+
+\medskip\noindent\emph{Intermediate separations: $(\log w)^{-1}<|t-u|\le\Delta$.} Now $|t-u|\log w>1$, and the same calculation bounds the expectation over primes in $(w,z]$ by $O(M_{w,z}^2)$. For the primes up to $w$, the exact identity behind \eqref{eq:4mom} gives
+\begin{equation}\label{eq:low4}
+\E\bigl[|R_w(t)|^2|R_w(u)|^2\bigr]\le\prod_{p\le w}\Bigl(1+\frac6p+\frac1{p^2}\Bigr)\ll(\log w)^6 .
+\end{equation}
+Since $W_T\ll1$ and $\int W_T\ll T$, the set of pairs with $|t-u|\le\Delta$ has $W_T(t)W_T(u)$-mass $O(T\Delta)$. This region therefore contributes $\ll T\Delta M_{w,z}^2(\log w)^6$. Its ratio to $m_0^2\asymp T^2M_w^2M_{w,z}^2\asymp T^2(\log w)^2M_{w,z}^2$ is $O((\log w)^{7/2}/T)=o(1)$.
+
+\medskip\noindent\emph{Close frequencies: $|t-u|\le(\log w)^{-1}$.} Put $h=|t-u|$; the diagonal $h=0$ has measure zero. If $h\le1/\log z$ choose $v=z$. Otherwise choose the largest $v\in\mathcal V$ with $\log v\le1/h$; this exists because $\log w\le1/h$. In either case
+\[
+\log v\asymp\min\{\log z,1/h\},
+\]
+and $h\log v\ge e^{-1}$ whenever $v<z$. Put $\rho=\rho(h)=\log v/\log w$, so that $k_v=\log\rho$. On $\mathcal B_t$ we have $|R_{w,v}(t)|^2\le Te^{-2\beta}\rho^2/(1+\log\rho)^4$. We keep this bound, drop every other barrier condition, and factor over the independent ranges $(w,v]$ and $(v,z]$:
+\begin{equation}\label{eq:closebound}
+\E\bigl[|R_{w,z}(t)|^2|R_{w,z}(u)|^2\one_{\mathcal B_t}\one_{\mathcal B_u}\bigr]\ll\frac{Te^{-2\beta}\rho^2}{(1+\log\rho)^4}M_{w,v}M_{v,z}^2\ll Te^{-2\beta}M_{w,z}^2\frac{\rho}{(1+\log\rho)^4}.
+\end{equation}
+For $v<z$, the bound $\E[|R_{v,z}(t)|^2|R_{v,z}(u)|^2]\ll M_{v,z}^2$ follows from \eqref{eq:4momlog} and \eqref{eq:pnt}, since both frequencies $t-u$ and $t+u$ satisfy $|\cdot|\log v\ge e^{-1}$. For $v=z$ that product is empty. The second inequality uses $M_{w,v}\asymp\rho$.
+
+The integral of the last factor in \eqref{eq:closebound} over $h$ satisfies
+\begin{equation}\label{eq:rhoint}
+\int_0^{1/\log w}\frac{\rho(h)}{(1+\log\rho(h))^4}\dd h\ll\frac{1}{\log w}.
+\end{equation}
+Indeed, the range $h\le1/\log z$ has $\rho=\log z/\log w$ and contributes at most $1/\log w$. On the rest $\rho\asymp r$ with $r=1/(h\log w)$, and the change of variables $h\mapsto r$ bounds that part by $(\log w)^{-1}\int_1^\infty r^{-1}(1+\log r)^{-4}\dd r$.
+
+Combining \eqref{eq:low4}--\eqref{eq:rhoint} with $W_T\ll1$ and $\int W_T\ll T$, the close-frequency contribution is
+\[
+\ll T^2e^{-2\beta}M_{w,z}^2(\log w)^5 ,
+\]
+and its ratio to $m_0^2$ is $O(e^{-2\sqrt\ell}\ell^{12})=o(1)$.
+
+\medskip
+We have proved $\E Z^2\le(1+o(1))m_0^2$. By \eqref{eq:IminusZ}, $\E Z=(1-o(1))m_0$, so $\Var Z=o(m_0^2)$ and $\E|Z/m_0-1|\to0$. Hence
+\[
+\E\bigl|I/m_0-1\bigr|\le\frac{\E(I-Z)}{m_0}+\E\bigl|Z/m_0-1\bigr|\longrightarrow0 .
+\]
+The integral over $\R$ equals $2I$ and $2m_0=M_zJ_T$, so Theorem~\ref{thm:conc} is proved. \qed
+
+\section{Transfer to the conditional variance}\label{sec:transfer}
+
+We now return to $y=x/(\log x)^\alpha$ with $0<\alpha<\log4-1$, and fix
+\[
+z=x^{1/\log\log\log x},\qquad X=x+y,\qquad\delta=\frac yx,\qquad\lambda=\log(1+\delta),\qquad T=\frac2\lambda,
+\]
+\[
+L=\log\log z,\qquad U=\frac{\log X}{\log z},\qquad\Theta_z=\prod_{p\le z}\Bigl(1-\frac1p\Bigr),\qquad\mathcal F_z=\sigma(\varepsilon_p:p\le z).
+\]
+So $\mathcal F_z$ is the $\sigma$-algebra generated by the signs at primes up to $z$. Note that $T\asymp\delta^{-1}\asymp(\log x)^\alpha$, that $L\sim\log\log x$, and that $U\sim\log\log\log x\asymp\log L$. In particular $\log T\sim\alpha L$, so the hypotheses of Theorem~\ref{thm:conc} hold.
+
+Every $n\in(x,X]$ factors uniquely as $n=n'm$ with $n'$ $z$-smooth and $m$ $z$-rough, and $f(n)=f(n')f(m)$. For $z$-rough $m>1$ define the $\mathcal F_z$-measurable coefficient
+\[
+a_m=\sum_{\substack{x/m<n\le X/m\\ P(n)\le z}}f(n).
+\]
+The part of the interval sum coming from integers with a prime factor larger than $z$ is
+\[
+S_{>z}=\sum_{\substack{1<m\le X\\ P^-(m)>z}}a_mf(m).
+\]
+Conditionally on $\mathcal F_z$, the values $f(m)$ at rough $m$ are orthonormal. So $S_{>z}$ has conditional mean zero and conditional variance
+\begin{equation}\label{eq:Vf}
+V_f=\E\bigl(S_{>z}^2\mid\mathcal F_z\bigr)=\sum_{\substack{1<m\le X\\ P^-(m)>z}}\mu(m)^2a_m^2 .
+\end{equation}
+
+\begin{proposition}\label{prop:transfer}
+We have
+\begin{equation}\label{eq:transfer}
+V_f=\frac{\Theta_z\,x\,e^{1/T}}{2\pi T^2}\int_\R W_T(t)|R_z(t)|^2\dd t+o_{L^1}(y).
+\end{equation}
+Consequently $V_f/(cy)\to1$ in $L^1$.
+\end{proposition}
+
+We first collect the arithmetic inputs, none of which is specific to the Rademacher model. Put $N=\lfloor x^{1/10}\rfloor$. For $1\le r<N$ let $\mathcal I_r=(X/(r+1),X/r]$, an interval of length $|\mathcal I_r|=X/(r(r+1))$, and let $N_r$ be the number of $z$-rough integers in $\mathcal I_r$.
+
+\begin{lemma}\label{lem:arith}
+For every fixed $A>0$ and all sufficiently large $x$:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\Psi(a+h,z)-\Psi(a,z)\le\Psi(h,z)$ for $a,h>z$, and $\Psi(h,z)\ll_AhL^{-A}$ for $x^{9/100}\le h\le2x$;
+\item $\displaystyle\sum_{n\in S(z),\ n>x^{9/100}}\frac1n\ll_A(\log z)L^{-A}$;
+\item $N_r=\Theta_z|\mathcal I_r|\{1+O_A(L^{-A})\}$ for every $1\le r<N$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The first inequality is Hildebrand's theorem \cite{Hil}, as recorded in \cite[Section~1.4]{Gra}; it holds once $z$ is sufficiently large. For the second, put $u_h=\log h/\log z\ge\frac{9}{100}\log\log\log x$. By the estimate $\Psi(h,z)=hu_h^{-u_h+o(u_h)}$ of Canfield, Erd\H{o}s and Pomerance \cite[(1.12)]{Gra}, valid since $z\ge(\log h)^2$, we get $\Psi(h,z)\ll_AhL^{-A}$, because $u_h\log u_h/\log L\to\infty$ uniformly in $h$.
+
+(b) Fix $B>0$ and put $\sigma=B/\log z$. Rankin's trick gives
+\[
+\sum_{\substack{n\in S(z)\\ n>x^{9/100}}}\frac1n\le x^{-9\sigma/100}\prod_{p\le z}\bigl(1-p^{-1+\sigma}\bigr)^{-1}\ll_BL^{-9B/100}\log z .
+\]
+Here $x^{-9\sigma/100}=\exp(-\tfrac{9B}{100}\log\log\log x)\le L^{-9B/100}$. The logarithm of the Euler product differs from its value at $\sigma=0$ by $O_B(1)$, because $p^\sigma-1\le e^B\sigma\log p$ for $p\le z$ and $\sum_{p\le z}(\log p)/p\ll\log z$; prime powers contribute $O_B(1)$. Choose $B>100A/9$.
+
+(c) We use the sieve estimate of \cite[Lemma~2.2]{HSX}, which they attribute to Iwaniec \cite[Theorem~3]{Iw}. Let $\mathcal M$ be a set of $M$ integers in which, for every $d\ge1$, the number of multiples of $d$ lies between $M/d-1$ and $M/d+1$. Put $s=\log M/\log z$ and suppose $s<\log M/(\log\log3M)^6$. Then the number of elements of $\mathcal M$ with no prime factor below $z$ equals $M\prod_{p<z}(1-1/p)\{1+O((e/(s\log s))^s)\}$. Apply this to the integers of $\mathcal I_r$, so that $M=|\mathcal I_r|+O(1)\gg x^{4/5}$. Then $s\asymp\log\log\log x\asymp\log L$, the hypothesis on $s$ holds, and $(e/(s\log s))^s=O_A(L^{-A})$. Replacing $M$ by $|\mathcal I_r|$, and $\prod_{p<z}$ by $\prod_{p\le z}$, changes the main term by a relative $O(x^{-4/5}+z^{-1})$, which is absorbed.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:transfer}]
+\emph{Removing $\mu(m)^2$.} Let $V_f^*\ge V_f$ be the sum \eqref{eq:Vf} without the factor $\mu(m)^2$. Each $\E a_m^2$ counts squarefree smooth $n$ with $mn\in(x,X]$. By unique factorization into smooth and rough parts, $\E(V_f^*-V_f)$ is at most the number of integers in $(x,X]$ divisible by $p^2$ for some $p>z$, so
+\[
+\E(V_f^*-V_f)\le\sum_{z<p\le\sqrt X}\Bigl(\frac{y}{p^2}+1\Bigr)\ll\frac yz+\sqrt x=o(y).
+\]
+
+\emph{Small $m$.} The terms of $V_f^*$ with $m\le X/N$ contribute $o(y)$ in expectation. In this range $x/m>z$ and $y/m\ge yN/X\ge x^{9/100}$, so Lemma~\ref{lem:arith}(a) gives $\E a_m^2\le\Psi(y/m,z)\ll_A(y/m)L^{-A}$. Summing with
+\[
+\sum_{\substack{m\le2x\\ P^-(m)>z}}\frac1m\le\prod_{z<p\le2x}\Bigl(1-\frac1p\Bigr)^{-1}\ll\frac{\log x}{\log z}\ll\log L
+\]
+gives $O_A(yL^{-A}\log L)=o(y)$.
+
+\emph{Large $m$: freezing.} If $m>X/N$ then $m\in\mathcal I_r$ for a unique $1\le r<N$. For such $r$ define the $\mathcal F_z$-measurable sum
+\[
+\Sigma_r=\sum_{\substack{(x/X)r<n\le r\\ P(n)\le z}}f(n).
+\]
+For every real $v\in\mathcal I_r$, the sum over smooth $n$ in $(x/v,X/v]$ differs from $\Sigma_r$ by at most two terms, because each endpoint moves by less than $1$. So the difference of the squares is $O(1+|\Sigma_r|)$. By orthogonality, $\E\Sigma_r^2\le\delta r+1$ and $\E|\Sigma_r|\le\sqrt{\delta r+1}$. Lemma~\ref{lem:arith}(c) and $|\mathcal I_r|\ll x/r^2$ therefore bound the expected cost of replacing $a_m^2$ by $\Sigma_r^2$ for all rough $m\in\mathcal I_r$, $r<N$, by
+\[
+\ll\Theta_z\sum_{r<N}|\mathcal I_r|\bigl(1+\sqrt{\delta r+1}\bigr)\ll\frac{x+\sqrt{xy}}{\log z}.
+\]
+Replacing $N_r$ by $\Theta_z|\mathcal I_r|$ in the resulting main term $\sum_rN_r\Sigma_r^2$ costs, in $L^1$,
+\[
+\ll_A\Theta_zL^{-A}\sum_{r<N}|\mathcal I_r|(\delta r+1)\ll_A\frac{y\log x+x}{\log z}L^{-A}.
+\]
+Now $\Theta_z|\mathcal I_r|\Sigma_r^2=\Theta_z\int_{\mathcal I_r}\Sigma_r^2\dd v$. Replacing $\Sigma_r$ by the sum over $(x/v,X/v]$ again costs at most the freezing error. All these errors are $o(y)$ once $A$ is large. Indeed $\log x/\log z\asymp\log L$, and $x/(y\log z)\ll(\log x)^{\alpha-1}\log L\to0$ and $\sqrt{x/y}/\log z\to0$ because $\alpha<1$. Thus
+\[
+V_f=\Theta_z\int_{X/N}^{X}\Bigl(\sum_{\substack{x/v<n\le X/v\\ P(n)\le z}}f(n)\Bigr)^2\dd v+o_{L^1}(y).
+\]
+
+\emph{Change of variables.} Substitute $u=x/v$, so that $X/v=(1+\delta)u$ and $\dd v=x\,u^{-2}\dd u$, and put $u_0=xN/X\ge x^{9/100}$. The integrand vanishes for $u<1/(1+\delta)$. Extending the range from $u\le u_0$ to $u<\infty$ adds, in expectation,
+\[
+\Theta_zx\sum_{\substack{n>u_0\\ P(n)\le z}}\int_{n/(1+\delta)}^{n}\frac{\dd u}{u^2}=\Theta_zy\sum_{\substack{n>u_0\\ P(n)\le z}}\frac1n\ll_AyL^{-A}
+\]
+by Lemma~\ref{lem:arith}(b) and $\Theta_z\log z\ll1$. Hence
+\begin{equation}\label{eq:Vfint}
+V_f=\Theta_zx\int_0^\infty\Bigl(\sum_{\substack{u<n\le(1+\delta)u\\ P(n)\le z}}f(n)\Bigr)^2\frac{\dd u}{u^2}+o_{L^1}(y).
+\end{equation}
+
+\emph{Parseval.} Recall $1+\delta=e^{2/T}$. Substitute $u=e^{v-1/T}$, so that the window becomes $e^{v-1/T}<n\le e^{v+1/T}$ and $\dd u/u^2=e^{1/T}e^{-v}\dd v$. Put
+\[
+\phi(v)=e^{-v/2}\sum_{\substack{e^{v-1/T}<n\le e^{v+1/T}\\ P(n)\le z}}f(n),\qquad\widehat\phi(t)=\int_\R e^{-itv}\phi(v)\dd v .
+\]
+Integrating term by term (the sum over $n$ is finite) gives, with $s=1/2+it$,
+\[
+\widehat\phi(t)=\sum_{n\in S(z)}f(n)\,n^{-s}\,\frac{e^{s/T}-e^{-s/T}}{s}=R_z(t)\,\frac{e^{s/T}-e^{-s/T}}{s}.
+\]
+Since $|e^{s/T}-e^{-s/T}|^2=2\cosh(1/T)-2\cos(2t/T)$, we have $|\widehat\phi(t)|^2=T^{-2}W_T(t)|R_z(t)|^2$. Plancherel's identity $\int|\phi|^2=(2\pi)^{-1}\int|\widehat\phi|^2$, applied in \eqref{eq:Vfint}, gives \eqref{eq:transfer}.
+
+\emph{Normalization.} By \eqref{eq:Wbounds},
+\[
+\frac{\Theta_zxe^{1/T}}{2\pi T^2}M_zJ_T=\Theta_zM_zx\bigl(e^{2/T}-1\bigr)=y\prod_{p\le z}\bigl(1-p^{-2}\bigr)\sim cy .
+\]
+Theorem~\ref{thm:conc} now gives $V_f/(cy)\to1$ in $L^1$.
+\end{proof}
+
+\section{The martingale and its increments}\label{sec:mart}
+
+For each prime $p>z$ define
+\[
+B_p=\sum_{\substack{x/p<m\le X/p\\ P(m)<p}}f(m),\qquad D_p=\varepsilon_pB_p .
+\]
+Every squarefree $n\in(x,X]$ with $P(n)=p>z$ is $n=pm$ with $P(m)<p$, and $f(n)=\varepsilon_pf(m)$. Hence
+\[
+S_{>z}=\sum_{z<p\le X}D_p .
+\]
+Reveal the signs $\varepsilon_p$, $p>z$, in increasing order of $p$, starting from $\mathcal F_z$. Then $B_p$ is determined by the signs at primes below $p$, while $\varepsilon_p$ is a fresh fair sign. So the $D_p$ are martingale differences, and
+\[
+Q_x=\sum_{z<p\le X}B_p^2
+\]
+is their \emph{predictable quadratic variation}, the sum of the conditional variances of the increments. Since martingale increments are orthogonal, the tower property gives the exact identity
+\begin{equation}\label{eq:tower}
+\E(Q_x\mid\mathcal F_z)=V_f .
+\end{equation}
+The martingale central limit theorem will require $Q_x/(cy)\to1$ in probability. Given Proposition~\ref{prop:transfer}, this amounts to $Q_x-V_f=o_\P(y)$, which is proved in Sections~\ref{sec:smooth}--\ref{sec:close}.
+
+\begin{lemma}[Small increments]\label{lem:small}
+Under the assumptions of Theorem~\ref{thm:main},
+\begin{equation}\label{eq:small}
+\frac1{y^2}\sum_{z<p\le X}\E D_p^4\ll\frac{x^2(\log2x)^4}{zy^2}=o(1).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We use the hypercontractive (Bonami) inequality for polynomials in independent signs. Let $\mathcal P$ be a finite set of primes and let $A=\sum_{S\subseteq\mathcal P}c_S\prod_{p\in S}\varepsilon_p$ with real $c_S$. Then
+\[
+\|A\|_4^2\le\sum_S3^{|S|}c_S^2 .
+\]
+For completeness: split off one sign as $A=A_0+\varepsilon A_1$, where $A_0,A_1$ do not involve $\varepsilon$. The odd powers of $\varepsilon$ average to zero, so Cauchy--Schwarz gives
+\[
+\E A^4=\E A_0^4+6\E A_0^2A_1^2+\E A_1^4\le\|A_0\|_4^4+6\|A_0\|_4^2\|A_1\|_4^2+\|A_1\|_4^4\le\bigl(\|A_0\|_4^2+3\|A_1\|_4^2\bigr)^2,
+\]
+and induction on $\#\mathcal P$ proves the claim. For any set $\mathcal A$ of integers in $[1,Y]$, each $f(m)$ is the product of the signs over the prime factors of $m$, so
+\[
+\E\Bigl(\sum_{m\in\mathcal A}f(m)\Bigr)^4\le\Bigl(\sum_{m\le Y}\mu(m)^23^{\omega(m)}\Bigr)^2\le\Bigl(\sum_{m\le Y}d_3(m)\Bigr)^2\ll Y^2(\log2Y)^4 ,
+\]
+using $\mu(m)^23^{\omega(m)}=d_3(m)$ for squarefree $m$ and the elementary bound $\sum_{m\le Y}d_3(m)\ll Y(\log2Y)^2$. Apply this with $Y=X/p$ and sum over $p>z$, using $\sum_{p>z}p^{-2}\ll1/z$. The ratio is $O((\log x)^{2\alpha+4}/z)=o(1)$.
+\end{proof}
+
+We use the following special case of the martingale central limit theorem; general versions are in \cite[Chapter~3]{HH}.
+
+\begin{lemma}[A martingale central limit theorem for random signs]\label{lem:mclt}
+For each $n\in\N$, let $k_n\in\N$ and let $(\mathcal G_{n,j})_{0\le j\le k_n}$ be an increasing sequence of $\sigma$-algebras. For $1\le j\le k_n$ let $b_{n,j}$ be real and $\mathcal G_{n,j-1}$-measurable, and let $\zeta_{n,j}$ be $\mathcal G_{n,j}$-measurable with
+\[
+\P(\zeta_{n,j}=1\mid\mathcal G_{n,j-1})=\P(\zeta_{n,j}=-1\mid\mathcal G_{n,j-1})=\tfrac12 .
+\]
+Suppose that, as $n\to\infty$,
+\[
+\sum_{j=1}^{k_n}b_{n,j}^2\longrightarrow1\ \text{in probability},\qquad\sum_{j=1}^{k_n}\E b_{n,j}^4\longrightarrow0 .
+\]
+Then $\sum_{j=1}^{k_n}\zeta_{n,j}b_{n,j}\Rightarrow N(0,1)$.
+\end{lemma}
+
+\begin{proof}
+Write $q_{n,j}=\sum_{i\le j}b_{n,i}^2$, which is $\mathcal G_{n,j-1}$-measurable. Truncate predictably:
+\[
+b'_{n,j}=b_{n,j}\one_{\{q_{n,j}\le2\}},\qquad S'_{n,j}=\sum_{i\le j}\zeta_{n,i}b'_{n,i},\qquad q'_{n,j}=\sum_{i\le j}(b'_{n,i})^2 .
+\]
+Since $q_{n,j}$ is increasing in $j$, we have $0\le q'_{n,j}\le2$. The truncated and original arrays agree whenever $q_{n,k_n}\le2$, hence with probability tending to one, and so $q'_{n,k_n}\to1$ in probability.
+
+Fix $t\in\R$ and set $\mathcal M_{n,j}=\exp(itS'_{n,j}+t^2q'_{n,j}/2)$. Averaging over the sign $\zeta_{n,j}$,
+\[
+\E\bigl(\mathcal M_{n,j}-\mathcal M_{n,j-1}\mid\mathcal G_{n,j-1}\bigr)=\mathcal M_{n,j-1}\bigl\{e^{t^2(b'_{n,j})^2/2}\cos(tb'_{n,j})-1\bigr\}.
+\]
+Since $e^{\theta^2/2}\cos\theta=1-\theta^4/12+O(\theta^6)$, for $|b|\le\sqrt2$ we have $|e^{t^2b^2/2}\cos(tb)-1|\le C_tb^4$. Also $|\mathcal M_{n,j-1}|\le e^{t^2}$. Summing the telescoping differences,
+\[
+|\E\mathcal M_{n,k_n}-1|\le C_te^{t^2}\sum_j\E b_{n,j}^4\longrightarrow0 .
+\]
+The bounded variables $e^{t^2q'_{n,k_n}/2}$ converge in probability, hence in $L^1$, to $e^{t^2/2}$. Therefore $e^{t^2/2}\E e^{itS'_{n,k_n}}=\E\mathcal M_{n,k_n}+o(1)\to1$. The original sums have the same limiting characteristic function, because the arrays agree with probability tending to one. L\'evy's continuity theorem completes the proof.
+\end{proof}
+
+\section{Smoothing and the conditional fourth moment}\label{sec:smooth}
+
+In this section and the next two we prove the following.
+
+\begin{proposition}[Quadratic-variation approximation]\label{prop:qv}
+With $V_f$ as in \eqref{eq:Vf} and $Q_x$ as in Section~\ref{sec:mart},
+\[
+Q_x-V_f=o_\P(y).
+\]
+\end{proposition}
+
+The structure follows the conditional fourth-moment method of \cite[Section~4]{HSX}. The difference is that a perfect-square quadruple of real characters is described by six free variables instead of four. The two extra variables produce correlations between opposite frequencies.
+
+\subsection{Smoothing the interval}
+The sharp endpoints of $(x,X]$ make the Mellin transform decay slowly, so we first average the interval over a small range of dilations. Put $\eta=(\log X)^{-100}$ and
+\[
+q(n)=\frac1\eta\int_0^\eta\one\{xe^{-v}<n\le Xe^{-v}\}\dd v .
+\]
+Then $0\le q\le1$, $q$ is supported on $(xe^{-\eta},X]$, and $q$ differs from $\one_{(x,X]}$ only on two intervals of total length $O(x\eta)$. Define
+\[
+\tB_p=\sum_{P(m)<p}f(m)q(pm),\qquad\tD_p=\varepsilon_p\tB_p,\qquad\tQ=\sum_{z<p\le X}\tB_p^2,\qquad\tV=\E(\tQ\mid\mathcal F_z).
+\]
+These are the coefficients, increments, quadratic variation and conditional variance for the smoothed sum $\sum_{P(n)>z}f(n)q(n)$. Prime sums below stop at $X$. By orthogonality,
+\[
+\sum_{p>z}\E(D_p-\tD_p)^2\ll x\eta+1,\qquad\sum_{p>z}\E(D_p+\tD_p)^2\ll y .
+\]
+Since $D_p^2=B_p^2$ and $\tD_p^2=\tB_p^2$, Cauchy's inequality over primes and over the probability space gives
+\begin{equation}\label{eq:smoothQ}
+\E|Q_x-\tQ|\le\Bigl(\sum_p\E(D_p-\tD_p)^2\Bigr)^{1/2}\Bigl(\sum_p\E(D_p+\tD_p)^2\Bigr)^{1/2}\ll\sqrt{y(x\eta+1)}=o(y).
+\end{equation}
+Conditional expectation is a contraction in $L^1$, so by \eqref{eq:tower} also $\E|V_f-\tV|=o(y)$. It therefore suffices to prove $\tQ-\tV=o_\P(y)$.
+
+\subsection{Expanding the conditional fourth moment}
+For squarefree $m>1$ with all prime factors in $(z,X]$, put
+\[
+\ta_m=\sum_{P(n)\le z}f(n)q(mn).
+\]
+Write $\E_{>z}$ for conditional expectation given $\mathcal F_z$; it averages only over signs at primes larger than $z$. Writing $m=pm'$ with $P(m')<p$ shows that $\tB_p=\sum_{P(m_1)=p}\ta_{m_1}f(m_1)\varepsilon_p$. Squaring and grouping by the largest rough prime gives
+\[
+\tQ-\tV=\sum_{p>z}\ \sum_{\substack{P(m_1)=P(m_3)=p\\ m_1\ne m_3}}\ta_{m_1}\ta_{m_3}f(m_1)f(m_3),
+\]
+the diagonal $m_1=m_3$ being exactly $\tV$. Here the $m_j$ are squarefree with prime factors in $(z,X]$, and the two occurrences of $\varepsilon_p$ cancel. The product of $f$ over a list of squarefree integers has mean zero over the rough signs unless every rough prime appears an even number of times. So, writing $\bm=(m_1,m_2,m_3,m_4)$,
+\begin{equation}\label{eq:Az}
+\mathcal A_z:=\E_{>z}(\tQ-\tV)^2={\sum_{\bm}}^{*}\,\ta_{m_1}\ta_{m_2}\ta_{m_3}\ta_{m_4},
+\end{equation}
+where $\sum^*$ runs over squarefree $m_j>1$ with prime factors in $(z,X]$ such that
+\begin{equation}\label{eq:star}
+m_1m_2m_3m_4\text{ is a square},\quad P(m_1)=P(m_3),\quad P(m_2)=P(m_4),\quad m_1\ne m_3,\quad m_2\ne m_4 .
+\end{equation}
+
+For real $t$ put $s=1/2+it$ and define
+\begin{equation}\label{eq:K}
+K(t)=\frac{e^{\lambda s}-1}{s}\cdot\frac{1-e^{-\eta s}}{\eta s},\qquad\kappa(t)=\min\bigl\{\delta,(1+|t|)^{-1}\bigr\}.
+\end{equation}
+Mellin inversion of the indicator of $(xe^{-v},Xe^{-v}]$, averaged over $v\in[0,\eta]$, gives
+\[
+\ta_m=\frac1{2\pi}\int_\R R_z(t)\Bigl(\frac xm\Bigr)^{1/2+it}K(t)\dd t .
+\]
+At the endpoints the averaging makes the weight continuous, so the formula holds there too. From $|e^{\lambda s}-1|\ll\min\{\lambda|s|,1\}$, the analogous bound for $1-e^{-\eta s}$, and the boundedness of the real parts of the exponents, we get
+\begin{equation}\label{eq:Kbound}
+|K(t)|\ll\min\Bigl\{\delta,\frac1{1+|t|},\frac1{\eta(1+|t|)^2}\Bigr\}\ll\kappa(t),\qquad\int_\R|K(t)|\dd t\ll\log(\delta/\eta)+1\ll L .
+\end{equation}
+
+Since $\ta_m$ is real, we may use the complex-conjugate formula for $m_3$ and $m_4$. For $\bt=(t_1,t_2,t_3,t_4)\in\R^4$ define the Dirichlet series
+\begin{equation}\label{eq:G}
+G(\bt)={\sum_{\bm}}^{*}\,\frac{1}{m_1^{1/2+it_1}m_2^{1/2+it_2}m_3^{1/2-it_3}m_4^{1/2-it_4}} .
+\end{equation}
+Because $q$ is supported on $[1,X]$, $\ta_m=0$ for $m>X$. So the restriction $m_j\le X$ may be dropped in \eqref{eq:Az}, and $G$ may be taken over all squarefree $m_j$ with prime factors in $(z,X]$; all these sets are finite. Substituting the integral formula into \eqref{eq:Az} gives
+\begin{equation}\label{eq:Azbound}
+0\le\mathcal A_z\ll x^2\int_{\R^4}\prod_{j=1}^4|R_z(t_j)K(t_j)|\,|G(\bt)|\dd\bt .
+\end{equation}
+
+\subsection{The six-variable estimate}
+Put $H=(\log X)^{1000}$ and
+\[
+\Gamma(v)=\begin{cases}\min\{1,(|v|\log X)^{-1}\},&v\ne0,\\1,&v=0.\end{cases}
+\]
+So $\Gamma$ is a bounded even function that decays like $1/|v|$ beyond the scale $1/\log X$.
+
+\begin{lemma}\label{lem:six}
+Uniformly for $|t_j|\le H$,
+\begin{equation}\label{eq:six}
+|G(\bt)|\ll U^6\min\Bigl\{\Gamma(t_1-t_3)\Gamma(t_2-t_4),\ \Gamma(t_1+t_2)+\Gamma(t_1-t_4)+\Gamma(t_2-t_3)+\Gamma(t_3+t_4)\Bigr\}+\frac{U^6}{z}.
+\end{equation}
+For all real $t_j$, $|G(\bt)|\ll U^6$.
+\end{lemma}
+
+\begin{proof}
+\emph{Parametrization.} In a quadruple of squarefree integers whose product is a square, each prime divides exactly two or all four of the entries. Recording which entries each prime divides gives a unique representation
+\begin{equation}\label{eq:param}
+m_1=kgab,\qquad m_2=khac,\qquad m_3=kgcd,\qquad m_4=khbd,
+\end{equation}
+where the seven variables are squarefree, pairwise coprime, and supported on primes in $(z,X]$. The variable $g$ collects primes dividing $m_1,m_3$ only; $h$ those dividing $m_2,m_4$ only; $a,b,c,d$ those dividing exactly the pairs $\{m_1,m_2\}$, $\{m_1,m_4\}$, $\{m_2,m_3\}$, $\{m_3,m_4\}$; and $k$ those dividing all four. The absolute value of the summand in \eqref{eq:G} is $k^{-2}(ghabcd)^{-1}$.
+
+For $z\le Y\le X$ and real $v$ let
+\[
+\mathcal E_Y(v)=\prod_{z<p\le Y}\bigl(1-p^{-1-iv}\bigr)^{-1},\qquad\log\mathcal E_Y(v)=\sum_{z<p\le Y}\sum_{\nu\ge1}\frac{p^{-\nu(1+iv)}}{\nu},
+\]
+the logarithm being defined by this absolutely convergent series. Then $|\mathcal E_Y(v)|\le\mathcal E_X(0)\asymp U$ by \eqref{eq:mertens}.
+
+\emph{Removing $k>1$.} The total absolute weight of the terms with $k>1$ is
+\[
+\ll\mathcal E_X(0)^6\Bigl(\prod_{z<p\le X}(1-p^{-2})^{-1}-1\Bigr)\ll U^6/z .
+\]
+
+\emph{The constraints.} When $k=1$, the common largest prime of $m_1$ and $m_3$ divides both, so it lies in $g$; similarly for $m_2,m_4$ and $h$. By pairwise coprimality, $m_1\ne m_3$ and $m_2\ne m_4$ are each equivalent to $abcd>1$. So the conditions \eqref{eq:star} become
+\begin{equation}\label{eq:constraints}
+g,h>1,\qquad abcd>1,\qquad P(abcd)<\min\{P(g),P(h)\}.
+\end{equation}
+
+\emph{Relaxation.} Now drop the conditions that the six variables $g,h,a,b,c,d$ are squarefree and pairwise coprime, and replace the strict inequality in \eqref{eq:constraints} by $\le$. The relaxed series is a sum over six-tuples of integers with prime factors in $(z,X]$. Every original six-tuple appears exactly once. Every added tuple contains some prime $p>z$ at least twice, either within one variable or in two variables; equality of $P(abcd)$ with $P(g)$ or $P(h)$ also forces such a repetition. We bound the added terms in absolute value. Let $P_6=\prod_{z<p\le X}(1-1/p)^{-6}=\mathcal E_X(0)^6$ and $P_{6,0}=\prod_{z<p\le X}(1+6/p)$. These are the total absolute weights of all six-tuples and of the six-tuples with no repeated prime. The added weight is therefore at most
+\begin{equation}\label{eq:relaxerr}
+P_6-P_{6,0}=P_6\Bigl\{1-\prod_{z<p\le X}\Bigl(1+\frac6p\Bigr)\Bigl(1-\frac1p\Bigr)^6\Bigr\}\ll P_6\sum_{p>z}p^{-2}\ll\frac{U^6}{z} .
+\end{equation}
+Here each factor $(1+6/p)(1-1/p)^6$ lies in $(0,1]$ and differs from $1$ by $O(p^{-2})$. The constraints in \eqref{eq:constraints} only remove positive terms from this bound.
+
+\emph{The relaxed series.} By \eqref{eq:param}, the summand of the relaxed series is
+\begin{equation}\label{eq:sixfactors}
+\frac{1}{g^{1+i(t_1-t_3)}\,h^{1+i(t_2-t_4)}\,a^{1+i(t_1+t_2)}\,b^{1+i(t_1-t_4)}\,c^{1+i(t_2-t_3)}\,d^{1-i(t_3+t_4)}} ,
+\end{equation}
+subject only to the relaxed form of \eqref{eq:constraints}.
+
+\emph{The key bound.} We claim that, uniformly for $|v|\le2H$ and $z\le Y\le X$,
+\begin{equation}\label{eq:Ebound}
+|\mathcal E_Y(v)-1|\ll U\,\Gamma(v).
+\end{equation}
+For $|v|\le1/\log X$ this is the trivial bound $|\mathcal E_Y(v)|+1\ll U$. If $1/\log X<|v|<1/\log z$, split the prime sum in $\log\mathcal E_Y(v)$ at $\exp(1/|v|)$. The primes below contribute at most $\log(1/(|v|\log z))+O(1)$ in real part, by \eqref{eq:mertens}. The primes above contribute $O(1)$, by \eqref{eq:pnt}. So $|\mathcal E_Y(v)|+1\ll1/(|v|\log z)=U\Gamma(v)$. If $|v|\ge1/\log z$, the bound \eqref{eq:pnt} (applied to real and imaginary parts) gives
+\[
+\log\mathcal E_Y(v)=O\Bigl(\frac{1}{|v|\log z}+\frac1z+(1+|v|)e^{-c_0\sqrt{\log z}}\Bigr).
+\]
+Since $|v|\le2H$ is at most a power of $\log X$, the last two errors are smaller than $(|v|\log z)^{-1}$. The right side is therefore bounded, and $|e^\omega-1|\ll|\omega|$ for bounded $\omega$ proves \eqref{eq:Ebound}.
+
+\emph{First bound.} Fix $a,b,c,d$ and let $Y^*=P(abcd)>z$. For $v=t_1-t_3$, the sum over $g$ with all prime factors in $(z,X]$ and $P(g)\ge Y^*$ equals
+\[
+\sum_{\substack{g:\ p\mid g\Rightarrow z<p\le X\\ P(g)\ge Y^*}}g^{-1-iv}=\mathcal E_X(v)-\mathcal E^-_{Y^*}(v),
+\]
+where $\mathcal E^-_{Y^*}$ is the product over $z<p<Y^*$. The sum over $h$ with $v=t_2-t_4$ has the same form. Subtracting $1$ from each Euler product and applying \eqref{eq:Ebound}, each inner sum is $O(U\Gamma(v))$. The outer absolute sums over $a,b,c,d$ are at most $\mathcal E_X(0)^4\ll U^4$. This gives $O(U^6\Gamma(t_1-t_3)\Gamma(t_2-t_4))$.
+
+\emph{Second bound.} Fix $g,h>1$ and let $Y^*=\min\{P(g),P(h)\}$. With
+\[
+(\xi_1,\xi_2,\xi_3,\xi_4)=(t_1+t_2,\ t_1-t_4,\ t_2-t_3,\ -t_3-t_4),
+\]
+the sum over $a,b,c,d$ with all prime factors at most $Y^*$ and $abcd>1$ equals $\prod_{j=1}^4\mathcal E_{Y^*}(\xi_j)-1$. Writing this difference as a telescoping sum and using $|\mathcal E_{Y^*}|\ll U$,
+\[
+\Bigl|\prod_{j=1}^4\mathcal E_{Y^*}(\xi_j)-1\Bigr|\ll U^3\sum_{j=1}^4|\mathcal E_{Y^*}(\xi_j)-1|\ll U^4\sum_{j=1}^4\Gamma(\xi_j).
+\]
+The outer absolute sums over $g,h$ are at most $\mathcal E_X(0)^2\ll U^2$. Since $\Gamma$ is even, this is the second bound in \eqref{eq:six}.
+
+Restoring the error \eqref{eq:relaxerr} and the discarded $k>1$ terms proves \eqref{eq:six}. The crude bound follows by summing all absolute weights in \eqref{eq:param}. All the relaxed series converge absolutely, since only finitely many primes occur and every local geometric ratio has modulus less than $1$.
+\end{proof}
+
+\section{Localization to two frequency configurations}\label{sec:local2}
+
+\subsection{Discarding large frequencies}
+Frequencies outside $[-H,H]^4$ contribute negligibly to \eqref{eq:Azbound}. By H\"older's inequality and \eqref{eq:low4} with $w=z$, $\E\prod_{j=1}^4|R_z(t_j)|\ll(\log z)^6$. By \eqref{eq:Kbound}, $\int_{|t|>H}|K(t)|\dd t\ll(\eta H)^{-1}$. Using the crude bound $|G|\ll U^6$, the expected contribution of these frequencies is
+\[
+\ll x^2U^6(\log z)^6L^3(\eta H)^{-1}=o(y^2).
+\]
+The $O(U^6/z)$ term in \eqref{eq:six} contributes in expectation at most $O(x^2U^6(\log z)^6L^4/z)=o(y^2)$. By Markov's inequality, both are $o_\P(y^2)$. On the remaining cube $[-H,H]^4$ we replace $|K(t)|$ by a constant multiple of $\kappa(t)$, using \eqref{eq:Kbound}.
+
+\subsection{A two-point estimate}
+
+\begin{lemma}\label{lem:twopoint}
+Let $t,u\in[1,H]$ and put $h=|t-u|$. Then
+\begin{equation}\label{eq:twopoint}
+\E|R_z(t)R_z(u)|\ll\min\Bigl\{\log z,\ \sqrt{\log z}\bigl(h^{-1/2}+L^2\bigr)\Bigr\},
+\end{equation}
+where for $h=0$ the second expression is read as $+\infty$. For frequencies of either sign, the same bound holds with $h=||t|-|u||$, provided $|t|,|u|\ge1$.
+\end{lemma}
+
+\begin{proof}
+Put $w_0=\exp(L^4)$. By Cauchy's inequality, the primes up to $w_0$ contribute a factor at most $M_{w_0}\ll\log w_0$. For a prime $p>w_0$, write $\gamma=p^{-1/2}$. The function $\gamma\mapsto\E|1+\varepsilon_p\gamma e^{-it\log p}|\,|1+\varepsilon_p\gamma e^{-iu\log p}|$ is even and analytic near $0$, because averaging over the sign removes odd powers. A Taylor expansion therefore gives, uniformly in $t,u$,
+\begin{multline*}
+\log\E\bigl[|1+\varepsilon_pp^{-1/2-it}|\,|1+\varepsilon_pp^{-1/2-iu}|\bigr]=\frac1{2p}-\frac{\cos(2t\log p)+\cos(2u\log p)}{4p}\\
++\frac{\cos((t-u)\log p)+\cos((t+u)\log p)}{2p}+O(p^{-2}).
+\end{multline*}
+The terms with frequencies $2t$, $2u$ and $t+u$, all at least $2$, sum to $O(1)$ over $p>w_0$ by \eqref{eq:pnt}; here $He^{-c_0\sqrt{\log w_0}}=\exp(O(L)-c_0L^2)=o(1)$. For the term with $t-u$: when $h>0$, split the prime sum at $\exp(1/h)$ if this point lies between $w_0$ and $z$. The primes below contribute at most their $\sum1/p$, and the primes above contribute $O(1)$ by \eqref{eq:pnt}. Hence
+\[
+\sum_{w_0<p\le z}\frac{\cos((t-u)\log p)}{p}\le\log\frac{\min\{\log z,\max\{\log w_0,1/h\}\}}{\log w_0}+O(1).
+\]
+Exponentiating, and multiplying by the low-prime factor, gives
+\begin{align*}
+\E|R_z(t)R_z(u)|&\ll\log w_0\Bigl(\frac{\log z}{\log w_0}\Bigr)^{1/2}\Bigl(\frac{\min\{\log z,\max\{\log w_0,1/h\}\}}{\log w_0}\Bigr)^{1/2}\\
+&\ll\sqrt{\log z\log w_0}+\min\Bigl\{\log z,\sqrt{\frac{\log z}{h}}\Bigr\}.
+\end{align*}
+Since $\sqrt{\log w_0}=L^2$, this together with the global bound $\E|R_z(t)R_z(u)|\le M_z\ll\log z$ proves \eqref{eq:twopoint}. The last assertion follows from $|R_z(-t)|=|R_z(t)|$.
+\end{proof}
+
+\subsection{Two random integrals}
+Put
+\[
+r_1=\frac{L^{20}}{\log z},\qquad r_2=\frac{L^{60}}{\log z},
+\]
+and define the nonnegative random integrals
+\[
+\mathcal J=\iint_{[-H,H]^2}|R_z(t)R_z(u)|\kappa(t)\kappa(u)\Gamma(t-u)\dd t\dd u,
+\]
+\[
+\mathcal J_{r_1}=\iint_{\substack{|t|,|u|\le H\\|t-u|>r_1}}|R_z(t)R_z(u)|\kappa(t)\kappa(u)\Gamma(t-u)\dd t\dd u,
+\]
+\[
+\mathcal C_{r_1}=\iint_{\substack{|t|,|u|\le H\\|t-u|\le r_1}}|R_z(t)R_z(u)|\kappa(t)\kappa(u)\dd t\dd u .
+\]
+
+\begin{lemma}\label{lem:JC}
+We have
+\begin{equation}\label{eq:JC}
+\E\mathcal J\ll\delta,\qquad\E\mathcal J_{r_1}\ll\delta L^{-10},\qquad\E\mathcal C_{r_1}\ll\delta L^{20}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Use $\kappa(t)\kappa(u)\le(\kappa(t)^2+\kappa(u)^2)/2$ and $\int_\R\kappa(t)^2\dd t\ll\delta$; by symmetry it suffices to integrate $u$ against $\kappa(t)^2$.
+
+\emph{Same signs, $|t|,|u|\ge1$.} Since $r_1\log X\ge1$, Lemma~\ref{lem:twopoint} bounds this contribution to $\E\mathcal J_{r_1}$ by
+\[
+\ll\frac{\delta\sqrt{\log z}}{\log X}\int_{r_1}^{2H}\Bigl(v^{-3/2}+\frac{L^2}{v}\Bigr)\dd v\ll\frac{\delta}{UL^{10}}+\frac{\delta L^3\sqrt{\log z}}{\log X}\ll\delta L^{-10}.
+\]
+For $\mathcal J$, on $|t-u|\le1/\log z$ use the bound $\log z$ from \eqref{eq:twopoint}; the integral of $\Gamma$ over this range is $O((1+\log U)/\log X)$, giving $O(\delta(1+\log U)/U)=O(\delta)$. On the rest, repeat the preceding calculation with $r_1$ replaced by $1/\log z$; this also gives $O(\delta)$.
+
+\emph{Opposite signs, $|t|,|u|\ge1$.} Then $\Gamma(t-u)=1/((|t|+|u|)\log X)$. Lemma~\ref{lem:twopoint} applies with $h=||t|-|u||$. For $v\ge1$, the substitution $w=vq$ gives
+\[
+\int_1^H\frac{|v-w|^{-1/2}}{v+w}\dd w\le v^{-1/2}\int_0^\infty\frac{|1-q|^{-1/2}}{1+q}\dd q\ll1 ,
+\]
+since the singularity at $q=1$ is integrable. Also $\int_1^H(v+w)^{-1}\dd w\ll\log H\ll L$. So the whole opposite-sign contribution (to $\mathcal J$, hence to $\mathcal J_{r_1}$) is $O(\delta L^3\sqrt{\log z}/\log X)$, which is smaller than $\delta L^{-10}$. In particular, opposite frequencies create no diagonal that $\mathcal J_{r_1}$ fails to remove.
+
+\emph{Small frequencies.} If $|t|<1$ or $|u|<1$, use $\E|R_z(t)R_z(u)|\le M_z\ll\log z$, $\kappa\le\delta$ and $\int_{-2H}^{2H}\Gamma(v)\dd v\ll L/\log X$. This gives $O(\delta^2L)$, which is smaller than $\delta L^{-10}$ because $\delta=(\log x)^{-\alpha}$ with $\alpha>0$ fixed.
+
+\emph{The integral $\mathcal C_{r_1}$.} Cauchy's inequality gives $\E|R_z(t)R_z(u)|\le M_z\ll\log z$, and the strip $|t-u|\le r_1$ has width $2r_1$. So $\E\mathcal C_{r_1}\ll\delta r_1\log z=\delta L^{20}$.
+\end{proof}
+
+By Markov's inequality, with probability tending to $1$,
+\begin{equation}\label{eq:JCevent}
+\mathcal J\le\delta L,\qquad\mathcal J_{r_1}\le\delta L^{-5},\qquad\mathcal C_{r_1}\le\delta L^{21}.
+\end{equation}
+
+\subsection{Localization}
+\emph{Separated pairs.} If $|t_1-t_3|>r_1$ or $|t_2-t_4|>r_1$, the first bound in \eqref{eq:six} factorizes the integral in \eqref{eq:Azbound}. On the event \eqref{eq:JCevent} the contribution is
+\[
+\ll x^2U^6\mathcal J_{r_1}\mathcal J\ll y^2U^6L^{-4}=o(y^2),
+\]
+using $x\delta=y$ and $U\asymp\log L$.
+
+\emph{Near-diagonal pairs.} It remains to treat $|t_1-t_3|,|t_2-t_4|\le r_1$. Define the regions in $[-H,H]^4$
+\[
+\mathcal D_+=\{\bt:|t_1-t_3|,|t_2-t_4|\le r_1,\ |t_1-t_4|\le r_2\},\qquad\mathcal D_-=\{\bt:|t_1-t_3|,|t_2-t_4|\le r_1,\ |t_1+t_2|\le r_2\}.
+\]
+Outside $\mathcal D_+\cup\mathcal D_-$, but with $|t_1-t_3|,|t_2-t_4|\le r_1$, all four arguments $\xi_j$ in the second bound of \eqref{eq:six} have absolute value at least $r_2-2r_1\ge r_2/2$. For instance $t_2-t_3=(t_2-t_4)+(t_4-t_1)+(t_1-t_3)$. So that contribution is, on \eqref{eq:JCevent},
+\[
+\ll\frac{x^2U^6}{r_2\log X}\mathcal C_{r_1}^2\ll y^2U^5L^{-18}=o(y^2).
+\]
+
+\emph{The regions $\mathcal D_\pm$.} By the arithmetic--geometric mean inequality,
+\[
+\prod_{j=1}^4|R_z(t_j)|\le\tfrac12\bigl(|R_z(t_1)R_z(t_2)|^2+|R_z(t_3)R_z(t_4)|^2\bigr).
+\]
+For the term $|R_z(t_1)R_z(t_2)|^2$, integrate over $t_3$ and $t_4$ using the first bound in \eqref{eq:six}. Since $r_1=o(1)$, the restrictions give $\kappa(t_3)\asymp\kappa(t_1)$ and $\kappa(t_4)\asymp\kappa(t_2)$ uniformly. Each of the two kernel integrals is at most
+\begin{equation}\label{eq:Gammaint}
+\int_{|v|\le4r_2}\Gamma(v)\dd v\ll\frac{1+\log(r_2\log X)}{\log X}\ll\frac1{\log z},
+\end{equation}
+using $\log(r_2\log X)\ll\log L\asymp U$. The region $\mathcal D_+$ forces $|t_1-t_2|\le r_2+r_1$, and $\mathcal D_-$ forces $|t_1+t_2|\le r_2$. For the term $|R_z(t_3)R_z(t_4)|^2$, integrate instead over $t_1,t_2$; the surviving pair satisfies $|t_3-t_4|\le r_2+2r_1$ or $|t_3+t_4|\le r_2+2r_1$.
+
+In each case with a sum $t\pm u$ (the reflected case), substitute $u\mapsto-u$. This uses only the exact identities $|R_z(-u)|=|R_z(u)|$ and $\kappa(-u)=\kappa(u)$, not any invariance of the law of $R_z$. Up to an absolute constant factor, it therefore remains to prove
+\begin{equation}\label{eq:closegoal}
+\frac{x^2U^6}{(\log z)^2}\iint_{\substack{|t|,|u|\le H\\|t-u|\le4r_2}}|R_z(t)|^2|R_z(u)|^2\kappa(t)^2\kappa(u)^2\dd t\dd u=o_\P(y^2).
+\end{equation}
+
+\section{The close-frequency bound and the end of the proof}\label{sec:close}
+
+Keep $w_0=\exp(L^4)$ and put $\beta_0=\sqrt L$. For $1\le|u|\le H$ define the \emph{good event}
+\begin{equation}\label{eq:good}
+\mathcal G_u=\Bigl\{|R_{w_0,z}(u)|\le\sqrt{T+|u|}\,e^{-\beta_0}\frac{\log z}{\log w_0}\Bigr\},
+\end{equation}
+and for $|u|<1$ put $\mathcal G_u=\emptyset$. We call $u$ \emph{bad} on the complementary event $\mathcal G_u^c$.
+
+Under the measure $\Q_u$ with density $|R_{w_0,z}(u)|^2/M_{w_0,z}$, the estimates \eqref{eq:tiltmean} together with \eqref{eq:mertens} and \eqref{eq:pnt} give, uniformly for $1\le|u|\le H$,
+\[
+\E_{\Q_u}\log|R_{w_0,z}(u)|=\log\frac{\log z}{\log w_0}+O(1),\qquad\Var_{\Q_u}\log|R_{w_0,z}(u)|\ll L .
+\]
+Since $\log T\sim\alpha L$, the logarithm of the threshold in \eqref{eq:good} exceeds this mean by
+\[
+\tfrac12\log(T+|u|)-\sqrt L-O(1)\ge\tfrac14\alpha L
+\]
+for all large $x$, uniformly in $u$. Chebyshev's inequality gives $\Q_u(\mathcal G_u^c)\ll_\alpha1/L$. The primes up to $w_0$ are independent of $\mathcal G_u$, so for each fixed frequency
+\begin{equation}\label{eq:badmass}
+\E\bigl[|R_z(u)|^2\one_{\mathcal G_u^c}\bigr]\ll_\alpha\frac{\log z}{L},\qquad1\le|u|\le H .
+\end{equation}
+
+Set
+\[
+\mathcal I_0=\frac1{\log z}\int_{-H}^{H}|R_z(t)|^2\kappa(t)^2\dd t,\qquad\mathcal I_{\rm bad}=\frac1{\log z}\int_{-H}^{H}|R_z(t)|^2\kappa(t)^2\one_{\mathcal G_t^c}\dd t .
+\]
+Then $\E\mathcal I_0\ll\delta$. Using \eqref{eq:badmass} for $|t|\ge1$, and $M_z\ll\log z$ with $\kappa\le\delta$ for $|t|<1$, we get $\E\mathcal I_{\rm bad}\ll_\alpha\delta/L+\delta^2\ll_\alpha\delta/L$. By Markov's inequality, with probability tending to $1$,
+\[
+\mathcal I_0\le\delta L^{1/8},\qquad\mathcal I_{\rm bad}\le\delta L^{-7/8}.
+\]
+On this event, the part of \eqref{eq:closegoal} in which at least one frequency is bad is
+\begin{equation}\label{eq:badpart}
+\ll x^2U^6\mathcal I_0\mathcal I_{\rm bad}\ll y^2U^6L^{-3/4}=o(y^2);
+\end{equation}
+here dropping the restriction $|t-u|\le4r_2$ only increases the integral.
+
+For the remaining part we keep only the good event at $u$, so $|u|\ge1$. On $\mathcal G_u$ we bound the high-prime factor at $u$ deterministically by \eqref{eq:good}, and then use independence of the two prime ranges together with \eqref{eq:low4} for the low primes:
+\begin{align}
+\E\bigl[|R_z(t)|^2|R_z(u)|^2\one_{\mathcal G_u}\bigr]&\le(T+|u|)e^{-2\beta_0}\Bigl(\frac{\log z}{\log w_0}\Bigr)^2M_{w_0,z}\,\E\bigl[|R_{w_0}(t)|^2|R_{w_0}(u)|^2\bigr]\notag\\
+&\ll(T+|u|)e^{-2\sqrt L}(\log z)^3(\log w_0)^3 .\label{eq:goodpart}
+\end{align}
+For $|t-u|\le4r_2$ we have $\kappa(t)\asymp\kappa(u)$, and $\int_\R(T+|u|)\kappa(u)^4\dd u\ll\delta^2$ since $T\asymp\delta^{-1}$. So the expected contribution of the good part to \eqref{eq:closegoal} is at most
+\[
+\ll x^2U^6e^{-2\sqrt L}(\log z)(\log w_0)^3r_2\delta^2\ll y^2U^6e^{-2\sqrt L}L^{72}=o(y^2).
+\]
+Markov's inequality and \eqref{eq:badpart} prove \eqref{eq:closegoal}.
+
+\begin{proof}[Proof of Proposition~\ref{prop:qv}]
+All the bounds of Sections~\ref{sec:local2} and~\ref{sec:close} are upper bounds for the nonnegative quantity in \eqref{eq:Azbound}. Collecting them gives
+\begin{equation}\label{eq:Azsmall}
+\mathcal A_z/y^2\longrightarrow0\quad\text{in probability}.
+\end{equation}
+Since $\mathcal A_z$ is the conditional second moment of $\tQ-\tV$ given $\mathcal F_z$, the conditional Chebyshev inequality gives, for every $\epsilon>0$,
+\[
+\P\bigl(|\tQ-\tV|>\epsilon y\bigr)\le\E\min\bigl\{1,\mathcal A_z/(\epsilon^2y^2)\bigr\}\longrightarrow0 ,
+\]
+by \eqref{eq:Azsmall} and bounded convergence; no convergence of $\E\mathcal A_z/y^2$ is needed. The smoothing estimate \eqref{eq:smoothQ} and its consequence $\E|V_f-\tV|=o(y)$ transfer this to $Q_x-V_f$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Propositions~\ref{prop:transfer} and~\ref{prop:qv} give $Q_x/(cy)\to1$ in probability. Apply Lemma~\ref{lem:mclt} along any sequence $x\to\infty$. Use the filtration that reveals the primes $p>z$ in increasing order, starting from $\mathcal F_z$, with signs $\zeta_{n,j}=\varepsilon_p$ and coefficients $b_{n,j}=B_p/\sqrt{cy}$. The first hypothesis of the lemma is exactly $Q_x/(cy)\to1$. The second follows from Lemma~\ref{lem:small}, since $B_p^4=D_p^4$. Hence $S_{>z}/\sqrt{cy}\Rightarrow N(0,1)$. The remaining sum over $z$-smooth $n\in(x,X]$ has second moment at most $\Psi(X,z)-\Psi(x,z)\le\Psi(y,z)=o(y)$, by Lemma~\ref{lem:arith}(a). Slutsky's theorem completes the proof.
+\end{proof}
+
+\section*{Funding}
+This research received no external funding.
+
+\section*{Acknowledgements}
+OpenAI Codex (GPT-6) assisted with developing and checking mathematical arguments and with drafting and revising the manuscript. Claude (Anthropic) assisted with the expository revision of this version and with numerical sanity checks. The author selected the research question and directed successive checks and revisions of the generated material. Responsibility for final verification and submission rests with the author.
+
+\section*{Conflict of interest}
+The author declares no conflict of interest.
+
+\section*{Data availability}
+All mathematical arguments are contained in the article. Scripts for the numerical sanity checks are available at \url{https://github.com/ramanujamath/rademacher-short-interval-clt}.
+
+\begin{thebibliography}{9}
+
+\bibitem{CS} S. Chatterjee and K. Soundararajan, \emph{Random multiplicative functions in short intervals}, Int. Math. Res. Not. IMRN \textbf{2012}, no.~3, 479--492. \url{https://doi.org/10.1093/imrn/rnr023}.
+
+\bibitem{DPC} B. Durkan and A. Pearce-Crump, \emph{A sharp almost sure upper bound for partial sums of random multiplicative functions}, preprint, arXiv:2607.29429v3 (2026).
+
+\bibitem{Gra} A. Granville, \emph{Smooth numbers: computational number theory and beyond}, in: Algorithmic Number Theory: Lattices, Number Fields, Curves and Cryptography, MSRI Publ.~44, Cambridge Univ. Press, 2008, 267--323.
+
+\bibitem{HH} P. Hall and C. C. Heyde, \emph{Martingale Limit Theory and Its Application}, Academic Press, 1980.
+
+\bibitem{HSX} A. J. Harper, K. Soundararajan and M. W. Xu, \emph{Distribution of random multiplicative functions in short intervals, with proper normalization}, preprint, arXiv:2606.29040v1 (2026).
+
+\bibitem{Hil} A. Hildebrand, \emph{Integers free of large prime divisors in short intervals}, Quart. J. Math. Oxford Ser.~(2) \textbf{36} (1985), 57--69. \url{https://doi.org/10.1093/qmath/36.1.57}.
+
+\bibitem{Iw} H. Iwaniec, \emph{On the error term in the linear sieve}, Acta Arith. \textbf{19} (1971), 1--30. \url{https://doi.org/10.4064/aa-19-1-1-30}.
+
+\bibitem{SX} K. Soundararajan and M. W. Xu, \emph{Central limit theorems for random multiplicative functions}, J. Anal. Math. \textbf{151} (2023), 343--374. \url{https://doi.org/10.1007/s11854-023-0331-y}.
+
+\end{thebibliography}
+
+\end{document}
