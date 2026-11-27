@@ -2,9 +2,11 @@
 
 **Author:** Sumit Kumar Jha (Independent Researcher, Greater Noida, India). Contact: sumitkumarjha75@gmail.com
 
-Let *f* be a Rademacher random multiplicative function. It is supported on the squarefree integers, and its values at the primes are independent fair ±1 signs. Fix 0 < α < log 4 − 1 and put y = x/(log x)^α. The main theorem says that
+Let *f* be a Rademacher random multiplicative function. It is supported on the squarefree integers, and its values at the primes are independent fair ±1 signs. Fix 0 < α < 1 and put y = x/(log x)^α. The main theorem says that
 
 $$\frac{1}{\sqrt{6y/\pi^2}}\sum_{x<n\le x+y} f(n) \;\Rightarrow\; N(0,1)\qquad (x\to\infty).$$
+
+Together with the theorem of Soundararajan and Xu, which covers y ≤ x/(log x)^{log 4 − 1 + ε}, this gives the Gaussian limit for every fixed α > 0. (The submitted v1 stated the narrower range 0 < α < log 4 − 1; see `AUDIT.md`.)
 
 The proof follows the martingale and conditional-variance method of Harper, Soundararajan and Xu. They use the fact that in the Steinhaus model the law of the random Euler product does not change when the frequency is shifted. That fails for Rademacher signs, and the paper replaces it with:
 
@@ -34,7 +36,7 @@ latexmk -pdf rademacher_short_interval_clt.tex
 
 ```bash
 cd verification
-python3 run_all.py           # about 3 minutes; all 124 checks should pass
+python3 run_all.py           # about 3 minutes; all 158 checks should pass
 python3 run_all.py --quick   # smaller Monte Carlo sample
 ```
 

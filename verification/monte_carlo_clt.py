@@ -1,6 +1,6 @@
 """Monte Carlo sanity check of Theorem 1.1 at computationally accessible sizes.
 
-For x in {1e5, 1e6} and alpha in {0.2, 0.35} we sample many independent sign sequences
+For x in {1e5, 1e6} and alpha in {0.2, 0.35, 0.8} we sample many independent sign sequences
 and compute S = sum_{x<n<=x+y} f(n) with y = x/(log x)^alpha. We report:
   * the exact variance ratio  #{squarefree n in (x,x+y]} / (c y),
   * mean, variance, skewness and excess kurtosis of S/sqrt(cy),
@@ -48,7 +48,7 @@ def interval_incidence(x, X):
 
 
 for x in [1e5, 1e6]:
-    for alpha in [0.2, 0.35]:
+    for alpha in [0.2, 0.35, 0.8]:
         y = x / np.log(x) ** alpha
         A, npr, nsq = interval_incidence(x, x + y)
         S = np.empty(nsamp)

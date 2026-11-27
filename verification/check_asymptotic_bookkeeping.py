@@ -95,7 +95,7 @@ grid_small = np.geomspace(20, 650, 400)
 grid_large = np.geomspace(20, 1e40, 4000)
 print(f"  {'claim':72s} {'alpha':>5s}  threshold L0=loglog x")
 for name, fn, uses_x in claims:
-    for a in (0.05, 0.38):
+    for a in (0.05, 0.38, 0.95):
         grid = grid_small if uses_x else grid_large
         vals = np.array([fn(L0, a) for L0 in grid])
         neg = vals < 0
@@ -108,6 +108,18 @@ for name, fn, uses_x in claims:
             thr, ok = float("nan"), False
         print(f"  {name:72s} {a:5.2f}  {thr:9.3g}")
         check(f"{name} [alpha={a}]", ok)
+
+# Control: with alpha = 1.05 exactly one bound should fail, namely the freezing error
+# x/(y log z) in Proposition 6.1. This confirms that alpha < 1 is used there and nowhere else.
+failing = []
+for name, fn, uses_x in claims:
+    grid = grid_small if uses_x else grid_large
+    vals = np.array([fn(L0, 1.05) for L0 in grid])
+    neg = vals < 0
+    if not (neg[-1] and np.all(neg[np.argmax(neg):])):
+        failing.append(name)
+print(f"  alpha = 1.05: failing bounds = {failing}")
+check("alpha = 1.05 breaks exactly one bound, the freezing error x/(y log z)", failing == ["x/(y log z)"])
 
 grid_psi = np.geomspace(3, 1e9, 4000)
 for name, fn in claims_psi:

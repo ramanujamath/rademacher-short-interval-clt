@@ -46,7 +46,7 @@
 \begin{document}
 
 \begin{abstract}
-Let $f$ be a Rademacher random multiplicative function: $f$ is supported on the squarefree integers, and its values at the primes are independent random signs, each equal to $+1$ or $-1$ with probability $1/2$. Fix $0<\alpha<\log 4-1$ and put $y=x/(\log x)^\alpha$. We prove that $\sum_{x<n\le x+y}f(n)$, divided by $\sqrt{6y/\pi^2}$, converges in distribution to a standard real Gaussian as $x\to\infty$. This covers interval lengths just beyond the range treated by Soundararajan and Xu. The proof follows the martingale method of Harper, Soundararajan and Xu, which they carried out for the Steinhaus model. In that model the law of the random Euler product does not change under a shift in frequency, and their argument uses this. That fails for Rademacher signs, and we replace it with two estimates that hold at each fixed frequency. The first is a weighted concentration theorem for the mean square of the random Euler product, proved by a barrier argument under a change of measure. The second handles the conditional fourth moment of the martingale. Rademacher signs create correlations both between equal frequencies and between opposite frequencies, and the second estimate controls both.
+Let $f$ be a Rademacher random multiplicative function: $f$ is supported on the squarefree integers, and its values at the primes are independent random signs, each equal to $+1$ or $-1$ with probability $1/2$. Fix $0<\alpha<1$ and put $y=x/(\log x)^\alpha$. We prove that $\sum_{x<n\le x+y}f(n)$, divided by $\sqrt{6y/\pi^2}$, converges in distribution to a standard real Gaussian as $x\to\infty$. For $\alpha\le\log4-1$ these interval lengths lie beyond the range treated by Soundararajan and Xu, and together with their theorem the result gives a Gaussian limit with this normalization for every fixed $\alpha>0$. The proof follows the martingale method of Harper, Soundararajan and Xu, which they carried out for the Steinhaus model. In that model the law of the random Euler product does not change under a shift in frequency, and their argument uses this. That fails for Rademacher signs, and we replace it with two estimates that hold at each fixed frequency. The first is a weighted concentration theorem for the mean square of the random Euler product, proved by a barrier argument under a change of measure. The second handles the conditional fourth moment of the martingale. Rademacher signs create correlations both between equal frequencies and between opposite frequencies, and the second estimate controls both.
 \end{abstract}
 
 \maketitle
@@ -63,7 +63,7 @@ f(n)=\begin{cases}\prod_{p\mid n}\varepsilon_p, & n \text{ squarefree},\\ 0, & \
 Throughout, $c=6/\pi^2$ and $N(0,1)$ is the real Gaussian distribution with mean $0$ and variance $1$. The arrow $\Rightarrow$ denotes convergence in distribution. All logarithms are natural.
 
 \begin{theorem}\label{thm:main}
-Fix $\alpha$ with $0<\alpha<\log 4-1$, and put $y=x/(\log x)^\alpha$. As $x\to\infty$,
+Fix $\alpha$ with $0<\alpha<1$, and put $y=x/(\log x)^\alpha$. As $x\to\infty$,
 \begin{equation}\label{eq:main}
 \frac{1}{\sqrt{cy}}\sum_{x<n\le x+y}f(n)\;\Rightarrow\; N(0,1).
 \end{equation}
@@ -74,12 +74,16 @@ The normalization is the standard deviation. Indeed, if $m\ne n$ are squarefree,
 \E\Bigl(\sum_{x<n\le x+y}f(n)\Bigr)^2=\sum_{x<n\le x+y}\mu(n)^2=cy+O(\sqrt{x})\sim cy .
 \]
 
+\begin{remark}\label{rem:range}
+The hypothesis $\alpha<1$ is used at only one point. In the proof of Proposition~\ref{prop:transfer}, replacing the coefficients $a_m$ by frozen sums costs $O(x/\log z)$ in expectation, and this must be $o(y)$. The hypothesis $\alpha>0$ is used in Sections~\ref{sec:local2} and~\ref{sec:close}, through $\delta=(\log x)^{-\alpha}\to0$ and $\log T\sim\alpha\log\log x$. Since $\log4-1<1$, every fixed $\alpha\ge1$ lies in the range of Soundararajan and Xu recalled below. So Theorem~\ref{thm:main} and their result together give \eqref{eq:main} for $y=x/(\log x)^\alpha$ with any fixed $\alpha>0$.
+\end{remark}
+
 \subsection{Background}
 Chatterjee and Soundararajan \cite[Theorem~1.1]{CS} proved Gaussian limits for Rademacher sums in short intervals. Soundararajan and Xu \cite[Section~9]{SX} extended the range of lengths. As recorded by Harper, Soundararajan and Xu \cite[Section~1]{HSX}, their result applies when
 \[
 Cx^{1/5}\log x\le y\le x/(\log x)^{\log 4-1+\epsilon}
 \]
-for a suitable constant $C$ and each fixed $\epsilon>0$. Theorem~\ref{thm:main} treats the longer intervals $y=x/(\log x)^\alpha$ with $0<\alpha<\log 4-1$.
+for a suitable constant $C$ and each fixed $\epsilon>0$. Theorem~\ref{thm:main} treats $y=x/(\log x)^\alpha$ with $0<\alpha<1$. For $0<\alpha\le\log4-1$ these lengths are new; for $\log4-1<\alpha<1$ the two results overlap.
 
 The \emph{Steinhaus} model has independent values at primes that are uniformly distributed on the complex unit circle, extended completely multiplicatively. For that model, Harper, Soundararajan and Xu \cite[Theorem~1.1]{HSX} prove Gaussian limits throughout the range $y\to\infty$, $y=o(x)$. They use an explicit normalization, which agrees with $\sqrt{y}$ until $\log(x/y)$ becomes comparable with $\sqrt{\log\log x}$ and differs from it beyond that point. In their Section~1.4 they leave the Rademacher analogue open and identify the obstacle. In the proof of their Proposition~3.7 they use the fact that, in the Steinhaus model, the family $(f(p)p^{-it})_p$ has the same law for every $t$ (\emph{translation invariance in law}). This is false for Rademacher signs. In our range $\log(x/y)\sim\alpha\log\log x$ is much larger than $\sqrt{\log\log x}$, so the usual normalization is the right one. We do not address the transition in the normalization.
 
@@ -330,7 +334,7 @@ The integral over $\R$ equals $2I$ and $2m_0=M_zJ_T$, so Theorem~\ref{thm:conc} 
 
 \section{Transfer to the conditional variance}\label{sec:transfer}
 
-We now return to $y=x/(\log x)^\alpha$ with $0<\alpha<\log4-1$, and fix
+We now return to $y=x/(\log x)^\alpha$ with $0<\alpha<1$, and fix
 \[
 z=x^{1/\log\log\log x},\qquad X=x+y,\qquad\delta=\frac yx,\qquad\lambda=\log(1+\delta),\qquad T=\frac2\lambda,
 \]
@@ -407,7 +411,7 @@ Replacing $N_r$ by $\Theta_z|\mathcal I_r|$ in the resulting main term $\sum_rN_
 \[
 \ll_A\Theta_zL^{-A}\sum_{r<N}|\mathcal I_r|(\delta r+1)\ll_A\frac{y\log x+x}{\log z}L^{-A}.
 \]
-Now $\Theta_z|\mathcal I_r|\Sigma_r^2=\Theta_z\int_{\mathcal I_r}\Sigma_r^2\dd v$. Replacing $\Sigma_r$ by the sum over $(x/v,X/v]$ again costs at most the freezing error. All these errors are $o(y)$ once $A$ is large. Indeed $\log x/\log z\asymp\log L$, and $x/(y\log z)\ll(\log x)^{\alpha-1}\log L\to0$ and $\sqrt{x/y}/\log z\to0$ because $\alpha<1$. Thus
+Now $\Theta_z|\mathcal I_r|\Sigma_r^2=\Theta_z\int_{\mathcal I_r}\Sigma_r^2\dd v$. Replacing $\Sigma_r$ by the sum over $(x/v,X/v]$ again costs at most the freezing error. All these errors are $o(y)$ once $A$ is large. Indeed $\log x/\log z\asymp\log L$, and $x/(y\log z)\ll(\log x)^{\alpha-1}\log L\to0$ and $\sqrt{x/y}/\log z\to0$ because $\alpha<1$. This is the only place in the paper where the upper bound on $\alpha$ is used. Thus
 \[
 V_f=\Theta_z\int_{X/N}^{X}\Bigl(\sum_{\substack{x/v<n\le X/v\\ P(n)\le z}}f(n)\Bigr)^2\dd v+o_{L^1}(y).
 \]

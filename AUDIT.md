@@ -14,6 +14,26 @@ No mathematical gap was found. The argument works as written. Every inequality w
 | Soundararajan–Xu range y ≤ x/(log x)^{log 4−1+ε}; HSX §1.4 obstacle (translation invariance in Prop. 3.7) | HSX §1 and §1.4 | matches |
 | Durkan–Pearce-Crump arXiv:2607.29429 | arXiv listing | exists |
 
+## Range of α widened to 0 < α < 1 (follow-up revision)
+
+The submitted version assumed 0 < α < log 4 − 1. Re-checking every place where α (or δ = (log x)^{−α}, or T ≍ (log x)^α) enters the proof shows that the argument only uses 0 < α < 1:
+
+| Where | What is needed | Holds for |
+|---|---|---|
+| Thm 1.2 hypotheses: T ≤ (log z)^C and log T/√(log log z) → ∞ | T ≍ (log x)^α | all α > 0 (with C = 1 when α < 1) |
+| Prop. 6.1: freezing error ≪ (x + √(xy))/log z = o(y) | x/(y log z) = (log x)^{α−1}·log log log x → 0 | **α < 1 (the only upper bound used)** |
+| Prop. 6.1: other errors (y/z, √x, yL^{−A} log L, extension to ∞) | – | all α > 0 |
+| Lemma 7.1: (log x)^{2α+4}/z → 0 | – | all α |
+| §8 smoothing: xη = o(y) with η = (log X)^{−100} | α < 100 | all α < 1 |
+| §9 large frequencies: (log x)^{2α}(log X)^{−900+O(1)} → 0 | – | all α < 1 |
+| Lemma 9.2: δ²L ≪ δL^{−10} | δ → 0 | α > 0 |
+| §10 barrier: ½ log T − √L ≥ αL/4 | log T ∼ αL | α > 0 |
+| §10 good part: ∫(T+\|u\|)κ(u)⁴ du ≪ δ² | T ≍ 1/δ | all α |
+
+The theorem now reads **0 < α < 1**, with a remark (Remark 1.2) explaining where each bound on α is used. Soundararajan–Xu cover y ≤ x/(log x)^{log 4−1+ε} for each fixed ε > 0, and log 4 − 1 < 1, so the two results together give the Gaussian limit with normalization √(cy) for **every fixed α > 0**. This is consistent with Harper–Soundararajan–Xu's Steinhaus theorem, where the usual normalization holds whenever log(x/y)/√(log log x) → ∞. That is the case for y = x/(log x)^α with any α > 0.
+
+`check_asymptotic_bookkeeping.py` now runs every exponent comparison at α = 0.05, 0.38 and 0.95. As a control, at α = 1.05 it confirms that exactly one comparison fails: the freezing error x/(y log z). The Monte Carlo script now also tests α = 0.8.
+
 ## Corrections made in the rewrite
 
 These are presentation-level fixes. None changes a statement or the structure of the proof.
@@ -40,14 +60,13 @@ These are presentation-level fixes. None changes a statement or the structure of
 
 ## Observations for the author (no change made)
 
-- **The hypothesis α < log 4 − 1 does not appear to be used.** The only upper bound on α used in the argument is α < 1: in Prop. 6.1 it gives x/(y log z) → 0 and √(x/y)/log z → 0. The lower bound α > 0 is used in Lemma 9.2 (δ²L ≪ δL^{−10}) and §10 (log T ∼ αL). If this is right, the theorem holds for every fixed 0 < α < 1, which overlaps the Soundararajan–Xu range. Either state the wider range, or say that the restriction only marks the range not previously covered.
 - **The proof is purely asymptotic.** `verification/check_asymptotic_bookkeeping.py` sets all implied constants to 1 and finds where each `o(1)` ratio drops below 1, in terms of L₀ = log log x. Several thresholds are astronomically large: about 2·10¹¹ for the bad-frequency term U⁶L^{−3/4}, and log L₀ ≈ 7·10⁵ for Ψ(h,z) ≪ hL^{−1} (Lemma 6.2(a)). This is normal for this kind of argument and is not an error. It does mean that numerical experiments cannot probe the regime of the proof.
-- **Monte Carlo** at x ≤ 10⁶ gives normalized sums whose variance is correct to within 3% and whose distribution passes a Kolmogorov–Smirnov test against N(0,1). The excess kurtosis is visibly positive (0.5–4), which is consistent with slow, log-log-scale convergence driven by the random Euler product. This is a sanity check only.
+- **Monte Carlo** at x ≤ 10⁶ gives normalized sums whose variance is correct to within 3% and whose distribution passes a Kolmogorov–Smirnov test against N(0,1). The excess kurtosis is mostly positive (about 0 to 1 in the committed run, larger in some runs), which is consistent with slow, log-log-scale convergence driven by the random Euler product. This is a sanity check only.
 - **Acknowledgements.** The rewrite adds one sentence saying that Claude (Anthropic) helped with the expository revision and the numerical checks. Edit or remove it as you see fit.
 
 ## Numerical verification summary
 
-Run `python3 verification/run_all.py`. All 124 checks pass.
+Run `python3 verification/run_all.py`. All 158 checks pass.
 
 | Script | What it checks | Checks |
 |---|---|---|
@@ -56,5 +75,5 @@ Run `python3 verification/run_all.py`. All 124 checks pass.
 | `check_prime_sums.py` | Oscillatory prime sums (eq:pnt), Mertens (eq:mertens), Euler-product bound (eq:Ebound), on a finite range | 4 |
 | `check_combinatorics.py` | Six-variable parametrization of square-product quadruples (bijection, weight, phases, equivalence of the constraints); Bonami inequality; Lemma 3.1 Walsh coefficients, exact variance, and support of c_d | 20 |
 | `check_transfer_identities.py` | Parseval identity of Prop. 6.1 (exact left side vs. closed-form and quadrature right sides); normalization to cy; smooth/rough and martingale decompositions; tower identity E(Q_x \| F_z) = V_f, exact | 10 |
-| `check_asymptotic_bookkeeping.py` | Every `o(1)` exponent comparison in §§4–10, for α = 0.05 and 0.38 | 56 |
-| `monte_carlo_clt.py` | Distribution of the normalized sum at x = 10⁵, 10⁶ and α = 0.2, 0.35 | 12 |
+| `check_asymptotic_bookkeeping.py` | Every `o(1)` exponent comparison in §§4–10, for α = 0.05, 0.38, 0.95; control at α = 1.05 | 84 |
+| `monte_carlo_clt.py` | Distribution of the normalized sum at x = 10⁵, 10⁶ and α = 0.2, 0.35, 0.8 | 18 |
